@@ -11,7 +11,11 @@ import SwiftUI
 struct SeriesTrackerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SeriesListView()
+                .modelContainer(for: [Series.self , Book.self, Author.self])
         }
+    }
+    init() {
+        print(URL.applicationSupportDirectory.path(percentEncoded: false))
     }
 }
