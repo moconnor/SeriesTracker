@@ -16,7 +16,7 @@ class Series {
     var isCompleted: Bool
     var author: Author?
     
-    init(name: String, author: Author? = nil, books: [Book] = []) {
+    init(name: String, author: Author, books: [Book] = []) {
         self.id = UUID()
         self.name = name
         self.books = books

@@ -55,11 +55,11 @@ struct SeriesListView: View {
         }
     }
     
-    private func addNewSeries() {
-        let newSeries = Series(name: newSeriesName)
-        modelContext.insert(newSeries)
-        newSeriesName = ""
-    }
+//    private func addNewSeries() {
+//        let newSeries = Series(name: newSeriesName)
+//        modelContext.insert(newSeries)
+//        newSeriesName = ""
+//    }
     
     private func deleteSeries(at offsets: IndexSet) {
         for index in offsets {
