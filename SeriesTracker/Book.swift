@@ -8,13 +8,6 @@
 import Foundation
 import SwiftData
 
-enum ReadStatus: String, Codable, CaseIterable {
-    case notStarted = "Not Started"
-    case inProgress = "In Progress"
-    case completed = "Completed"
-    case abandoned = "Abandoned"
-}
-
 @Model
 class Book {
     var id: UUID
@@ -23,7 +16,7 @@ class Book {
     var readStatus: ReadStatus
     var startDate: Date?
     var endDate: Date?
-    var rating: Int? // Optional rating out of 5
+    var rating: Int?
     var notes: String
     var series: Series?
     var author: Author?
@@ -43,8 +36,4 @@ class Book {
         self.author = author
     }
     
-    // Computed property for overall read progress
-    var isRead: Bool {
-        return readStatus == .completed
-    }
 }

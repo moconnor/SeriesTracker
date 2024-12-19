@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BookDetailView: View {
+struct BookDetailsView: View {
     @Bindable var book: Book
     @Environment(\.modelContext) private var modelContext
     @State private var showingAuthorPicker = false
@@ -37,7 +37,7 @@ struct BookDetailView: View {
             
             Section(header: Text("Reading Progress")) {
                 Picker("Read Status", selection: $book.readStatus) {
-                    ForEach([ReadStatus.notStarted, .inProgress, .completed, .abandoned], id: \.self) { status in
+                    ForEach(ReadStatus.allCases, id: \.self) { status in
                         Text(status.rawValue.capitalized).tag(status)
                     }
                 }
@@ -84,5 +84,5 @@ struct BookDetailView: View {
 }
 
 #Preview {
-    BookDetailView(book: Book.randomBook())
+    BookDetailsView(book: Book.randomBook())
 }

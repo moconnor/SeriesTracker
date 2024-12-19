@@ -23,6 +23,5 @@ struct Preview {
                 container.mainContext.insert($0)
             }
         }
-
     }
 }

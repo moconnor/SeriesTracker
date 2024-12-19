@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 extension Author {
     static let samples: [Author] = [
@@ -64,5 +65,13 @@ extension Author {
     static func randomAuthor() -> Author {
         let randomIndex = Int.random(in: 0..<Author.samples.count)
         return Author.samples[randomIndex]
+    }
+    
+    static func authorDatabase(author: Author) -> ModelContainer {
+        let authors = [author,
+                       randomAuthor(), randomAuthor(), randomAuthor(), randomAuthor()]
+        let preview = Preview([Author.self])
+        preview.add(items: authors)
+        return preview.container
     }
 }

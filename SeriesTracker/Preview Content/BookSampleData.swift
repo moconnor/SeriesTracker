@@ -8,49 +8,63 @@
 import Foundation
 
 extension Book {
-    static let samples: [Book] = [
-        Book(title: "The Alchemist", author: Author.randomAuthor()),
-        Book(title: "The Great Rabbit", author: Author.randomAuthor()),
-        Book(title: "The Very Hungry Caterpillar", author: Author.randomAuthor()),
-        Book(title: "The Lion and the Witch", author: Author.randomAuthor()),
-        Book(title: "Tiny Princess", author: Author.randomAuthor()),
-        Book(title: "Once Upon A Comet", author: Author.randomAuthor()),
-        Book(title: "Book 01", author: Author.randomAuthor()),
-        Book(title: "Book 02", author: Author.randomAuthor()),
-        Book(title: "Book 03", author: Author.randomAuthor()),
-        Book(title: "Book 04", author: Author.randomAuthor()),
-        Book(title: "Book 05", author: Author.randomAuthor()),
-        Book(title: "Book 06", author: Author.randomAuthor()),
-        Book(title: "Book 07", author: Author.randomAuthor()),
-        Book(title: "Book 08", author: Author.randomAuthor()),
-        Book(title: "Book 09", author: Author.randomAuthor()),
-        Book(title: "Book 10", author: Author.randomAuthor()),
-        Book(title: "Book 11", author: Author.randomAuthor()),
-        Book(title: "Book 12", author: Author.randomAuthor()),
-        Book(title: "Book 13", author: Author.randomAuthor()),
-        Book(title: "Book 14", author: Author.randomAuthor()),
-        Book(title: "Book 15", author: Author.randomAuthor()),
-        Book(title: "Book 16", author: Author.randomAuthor()),
-        Book(title: "Book 17", author: Author.randomAuthor()),
-        Book(title: "Book 18", author: Author.randomAuthor()),
-        Book(title: "Book 19", author: Author.randomAuthor()),
-        Book(title: "Book 20", author: Author.randomAuthor())
+    static let bookTitles: [String] = [
+        "The Alchemist",
+        "The Great Rabbit",
+        "The Very Hungry Caterpillar",
+        "The Lion and the Witch",
+        "Tiny Princess",
+        "Once Upon A Comet",
+        "The Enchanted Garden",
+        "The Enchanted Forest",
+        "Whispers of the Clockmaker",
+        "The Last Quantum Garden",
+        "Echoes from Tomorrow's Dawn",
+        "Beyond the Crystal Horizon",
+        "The Midnight Cartographer",
+        "Secrets of the Paper Phoenix",
+        "The Forgotten Algorithm",
+        "Dreams in Binary",
+        "The Alabaster Chronicle",
+        "Shadows of the Brass Tower",
+        "The Silent Mathematician",
+        "Riddles of the Autumn King",
+        "The Emerald Equations",
+        "Mysteries of the Digital Forest",
+        "The Prismatic Paradox",
+        "Legends of the Neon Sage",
+        "The Temporal Architect",
+        "Whispers from the Data Stream",
+        "The Quantum Librarian",
+        "Chronicles of the Glass Desert"
     ]
  
     static func randomStatus() -> ReadStatus {
         let randomIndex = Int.random(in: 0..<ReadStatus.allCases.count)
         return ReadStatus.allCases[randomIndex]
     }
-    static func randomBook() -> Book {
-        let randomIndex = Int.random(in: 0..<Book.samples.count)
-        return Book.samples[randomIndex]
+    
+    static func randomBookTitle() -> String {
+        let randomIndex = Int.random(in: 0..<Book.bookTitles.count)
+        return Book.bookTitles[randomIndex]
     }
     
-    static func randomBook(series: Series) -> Book {
-        let randomIndex = Int.random(in: 1..<Book.samples.count)
-        let book = Book.samples[randomIndex]
-        book.author = series.author
+    static func randomBook() -> Book {
+        return Book(title: Book.randomBookTitle(), author: Author.randomAuthor())
+    }
+    
+    static func randomBook(author: Author) -> Book { //series: Series) -> Book {
+        let book = Book.randomBook()
+        book.author = author
         book.readStatus = randomStatus()
         return book
+    }
+    
+    static func randomBookArray(author: Author) -> [Book] {
+        var books: [Book] = []
+        for _ in 0..<Int.random(in: 1..<5) {
+            books.append(Book.randomBook(author: author))
+        }
+        return books
     }
 }
