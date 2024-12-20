@@ -20,7 +20,6 @@ class Series {
         self.id = UUID()
         self.name = name
         self.books = books
-       // self.readStatus = .notStarted
         self.author = author
     }
 

@@ -61,12 +61,6 @@ struct SeriesListView: View {
         }
     }
     
-//    private func addNewSeries() {
-//        let newSeries = Series(name: newSeriesName)
-//        modelContext.insert(newSeries)
-//        newSeriesName = ""
-//    }
-    
     private func deleteSeries(at offsets: IndexSet) {
         for index in offsets {
             let seriesItem = series[index]
@@ -82,9 +76,9 @@ struct SeriesListView: View {
         .modelContainer(authorDB)
 }
 
-#Preview("With Data") {
+#Preview("With Series") {
     let preview = Preview([Series.self])
-    for _ in 0..<10 {
+    for _ in 0..<Int.random(in: 1..<15) {
         let series = Series.randomSeries()
         preview.add(items: [series])
     }

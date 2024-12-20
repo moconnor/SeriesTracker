@@ -12,21 +12,29 @@ struct BookEditorView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) var presentationMode
     
+    var series: Series
     @State private var book: Book
     @State private var showingNewAuthorSheet = false
     @State private var newAuthorName = ""
     
     // Fetch available authors and series
     @Query(sort: \Author.name) private var authors: [Author]
-    @Query(sort: \Series.name) private var allSeries: [Series]
+
+    private var editorTitle: String
+    private var buttonName: String
     
-    init(book: Book? = nil) {
+    init(book: Book? = nil, series: Series) {
         if let existingBook = book {
             _book = State(initialValue: existingBook)
+            editorTitle = "Edit Book"
+            buttonName = "Update Book"
         } else {
             let newBook = Book(title: "")
             _book = State(initialValue: newBook)
+            editorTitle = "Add Book"
+            buttonName = "Add Book"
         }
+        self.series =  series
     }
     
     var body: some View {
@@ -38,11 +46,6 @@ struct BookEditorView: View {
                     // Author picker with add new option
                     authorSelectionView
                     
-                    // Series picker and order
-                    seriesSelectionView
-                    if book.series != nil {
-                        Stepper("Series Order: \(book.seriesOrder)", value: $book.seriesOrder, in: 1...999)
-                    }
                 }
                 
                 Section(header: Text("Reading Status")) {
@@ -79,13 +82,13 @@ struct BookEditorView: View {
                 }
                 
                 Section {
-                    Button(book.id == UUID() ? "Create Book" : "Update Book") {
+                    Button(buttonName) {
                         saveBook()
                     }
                     .disabled(book.title.isEmpty)
                 }
             }
-            .navigationTitle(book.id == UUID() ? "New Book" : "Edit Book")
+            .navigationTitle(editorTitle)
             .navigationBarItems(trailing:
                 Button("Cancel") {
                     presentationMode.wrappedValue.dismiss()
@@ -137,45 +140,8 @@ struct BookEditorView: View {
             HStack {
                 Text("Author")
                 Spacer()
-                Text(book.author?.name ?? "None")
+                Text(series.author.name)
                     .foregroundColor(book.author == nil ? .gray : .primary)
-            }
-        }
-    }
-    
-    private var seriesSelectionView: some View {
-        Menu {
-            // Optional: No series
-            Button(action: { book.series = nil }) {
-                HStack {
-                    Text("None")
-                    if book.series == nil {
-                        Image(systemName: "checkmark")
-                    }
-                }
-            }
-            
-            if !allSeries.isEmpty {
-                Divider()
-                
-                // Existing series
-                ForEach(allSeries) { series in
-                    Button(action: { book.series = series }) {
-                        HStack {
-                            Text(series.name)
-                            if series.id == book.series?.id {
-                                Image(systemName: "checkmark")
-                            }
-                        }
-                    }
-                }
-            }
-        } label: {
-            HStack {
-                Text("Series")
-                Spacer()
-                Text(book.series?.name ?? "None")
-                    .foregroundColor(book.series == nil ? .gray : .primary)
             }
         }
     }
@@ -255,5 +221,6 @@ struct BookEditorView: View {
 }
 
 #Preview {
-    BookEditorView()
+    let series = Series.randomSeries()
+    BookEditorView(series: series)
 }

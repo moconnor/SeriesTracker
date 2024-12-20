@@ -4,22 +4,32 @@ import SwiftData
 struct SeriesEditorView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
-
+    
     @State private var series: Series
     @State private var showingNewAuthorSheet = false
     @State private var newAuthorName = ""
     
     @Query(sort: \Author.name) private var authors: [Author]
     
+    private var editorTitle: String
+    private var buttonName: String
+    private var isNewSeries: Bool
+   
     // Single initializer that handles both new and existing series
     init(series: Series? = nil) {
         if let existingSeries = series {
             _series = State(initialValue: existingSeries)
+            editorTitle = "Edit Series"
+            buttonName = "Update Series"
+            isNewSeries = false
         } else {
             // Create a new series with a default author when none is provided
             let defaultAuthor = Author(name: "")
             let newSeries = Series(name: "", author: defaultAuthor)
             _series = State(initialValue: newSeries)
+            editorTitle = "Add Series"
+            buttonName = "Add Series"
+            isNewSeries = true
         }
     }
     
@@ -31,27 +41,20 @@ struct SeriesEditorView: View {
                     
                     // Author picker with add new option
                     authorSelectionView
-                    
-                    //Toggle("Completed", isOn: $series.isCompleted)
-                }
-                
-                Section(header: Text("Books")) {
-                    BookListView(books: series.books)
                 }
                 
                 Section {
-                    Button(series.id == UUID() ? "Create Series" : "Update Series") {
+                    Button(buttonName) {
                         saveOrUpdateSeries()
                     }
                     .disabled(series.name.isEmpty)
                 }
             }
-            .navigationTitle(series.id == UUID() ? "New Series" : "Edit Series")
+            .navigationTitle(editorTitle)
             .navigationBarItems(trailing:
-                Button("Cancel") {
+                                    Button("Cancel") {
                 dismiss()
-                }
-            )
+            })
             .sheet(isPresented: $showingNewAuthorSheet) {
                 NavigationView {
                     Form {
@@ -67,7 +70,7 @@ struct SeriesEditorView: View {
                         trailing: Button("Add") {
                             addNewAuthor()
                         }
-                        .disabled(newAuthorName.isEmpty)
+                            .disabled(newAuthorName.isEmpty)
                     )
                 }
             }
@@ -90,10 +93,7 @@ struct SeriesEditorView: View {
                 }
             }
             
-//            // Divider if we have existing authors
-//            if !authors.isEmpty {
-                Divider()
-//            }
+            Divider()
             
             // Add new author option
             Button(action: {
@@ -127,8 +127,11 @@ struct SeriesEditorView: View {
         
         do {
             if series.id == UUID() {
+                if isNewSeries {
+                    modelContext.insert(series)
+                }
                 // This is a new series
-                modelContext.insert(series)
+                //modelContext.insert(series)
             }
             // Existing series will be updated automatically by SwiftData
             

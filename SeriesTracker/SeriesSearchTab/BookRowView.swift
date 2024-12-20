@@ -9,12 +9,22 @@ import SwiftUI
 
 struct BookRowView: View {
     let book: BookInfo
+    @State private var importBook: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(book.title)
-                .font(.headline)
-            
+            HStack {
+                Text(book.title)
+                    .font(.headline)
+                Spacer()
+                Button {
+                    importBook.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                        .foregroundColor(.blue)
+                }
+            }
+
             if let authors = book.authors {
                 Text("By: \(authors.joined(separator: ", "))")
                     .font(.subheadline)
@@ -39,11 +49,29 @@ struct BookRowView: View {
                     .font(.caption)
                     .foregroundColor(.blue)
             }
+
         }
         .padding(.vertical, 8)
+        .sheet(isPresented: $importBook) {
+            ImportBookView()
+        }
     }
 }
 
 //#Preview {
 //    BookRowView()
 //}
+
+struct ImportBookView: View {
+    var body: some View {
+        VStack(spacing: 10) {
+            Text("Select the series to import into:")
+            Text("Pompt for the book and author of the book")
+            Text("Eventually, prompt for the other book data")
+        }
+    }
+}
+
+#Preview {
+    ImportBookView()
+}

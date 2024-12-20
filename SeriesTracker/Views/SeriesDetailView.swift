@@ -23,7 +23,7 @@ struct SeriesDetailView: View {
                 Text(series.name)
                     .font(.title)
                     .bold()
-                Text(series.status.rawValue)
+                Text(series.readStatus().rawValue)
                     .font(.headline)
                 
                 Divider()
@@ -43,12 +43,11 @@ struct SeriesDetailView: View {
                     }
                 Divider()
                 
-                BookListView(books: series.books)
+                BookListView(series: series)
                 
                 Divider()
             }
             .padding()
-            //.navigationTitle(series.name)
         }
         
     }
