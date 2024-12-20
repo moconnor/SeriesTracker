@@ -11,8 +11,7 @@ import SwiftUI
 struct SeriesTrackerApp: App {
     var body: some Scene {
         WindowGroup {
-            SeriesListView()
-                .modelContainer(for: [Series.self , Book.self, Author.self])
+            ContentView()
         }
     }
     init() {
