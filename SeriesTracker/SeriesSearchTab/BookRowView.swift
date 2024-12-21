@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct BookRowView: View {
-    let book: BookInfo
+    let bookInfo: BookInfo
     @State private var importBook: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text(book.title)
+                Text(bookInfo.title)
                     .font(.headline)
                 Spacer()
                 Button {
@@ -24,54 +24,48 @@ struct BookRowView: View {
                         .foregroundColor(.blue)
                 }
             }
-
-            if let authors = book.authors {
+            
+            if let authors = bookInfo.authors {
                 Text("By: \(authors.joined(separator: ", "))")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
             
-            if let publishedDate = book.publishedDate {
+            if let publishedDate = bookInfo.publishedDate {
                 Text("Published: \(publishedDate)")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
             
-            if let description = book.description {
+            if let description = bookInfo.description {
                 Text(description)
                     .font(.caption)
                     .lineLimit(3)
                     .padding(.top, 4)
             }
             
-            if let seriesInfo = book.seriesInfo?.bookDisplayNumber {
+            if let seriesInfo = bookInfo.seriesInfo?.bookDisplayNumber {
                 Text("Book \(seriesInfo) in series")
                     .font(.caption)
                     .foregroundColor(.blue)
             }
-
+            
         }
         .padding(.vertical, 8)
         .sheet(isPresented: $importBook) {
-            ImportBookView()
-        }
-    }
-}
-
-//#Preview {
-//    BookRowView()
-//}
-
-struct ImportBookView: View {
-    var body: some View {
-        VStack(spacing: 10) {
-            Text("Select the series to import into:")
-            Text("Pompt for the book and author of the book")
-            Text("Eventually, prompt for the other book data")
+            let authorName = bookInfo.authors?.first ?? "Unknown"
+            let newBook = Book(title: bookInfo.title, author: Author(name: authorName))
+            ImportBookView(book: newBook)
         }
     }
 }
 
 #Preview {
-    ImportBookView()
+    let books = BookInfo.loadSampleData()
+    List {
+        ForEach(books, id: \.title) { book in
+            BookRowView(bookInfo: book)
+        }
+    }
 }
+

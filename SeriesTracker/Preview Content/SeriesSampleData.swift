@@ -53,6 +53,22 @@ extension Series {
         return series
     }
     
+    static func sampleSeries() -> ModelContainer {
+        var sampleTestSeries: [Series] = []
+        sampleTestSeries.append(randomSeries())
+        
+        for _ in 0..<Int.random(in: 0..<seriesNames.count) {
+            let sample = randomSeries()
+            if sampleTestSeries.contains(where: {$0.name == sample.name}) {
+                continue
+            }
+            sampleTestSeries.append(sample)
+        }
+        let preview = Preview([Series.self , Book.self, Author.self])
+        preview.add(items: sampleTestSeries)
+        return preview.container
+    }
+    
     static func sampleDB(preview: Preview, author: Author) -> ModelContainer {
         let preview = Preview([Author.self])
         return preview.container

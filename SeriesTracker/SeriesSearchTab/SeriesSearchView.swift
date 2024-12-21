@@ -14,51 +14,52 @@ struct SeriesSearchView: View {
     @State private var showResults = false
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                Text("Series Search")
-                    .font(.largeTitle)
-                    .padding(.top)
-                
-                VStack(spacing: 15) {
-                    TextField("Series Name", text: $seriesName)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
+        VStack {
+            NavigationStack {
+                VStack(spacing: 20) {
+                    Text("Series Search")
+                        .font(.largeTitle)
+                        .padding(.top)
                     
-                    TextField("Author Name", text: $authorName)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
-                    
-                    Button(action: {
-                        showResults = true
-                    }) {
-                        Text("Search")
-                            .foregroundColor(.white)
-                            .frame(width: 200)
-                            .padding()
-                            .background(
-                                !seriesName.isEmpty && !authorName.isEmpty ?
-                                Color.blue : Color.gray
-                            )
-                            .cornerRadius(10)
+                    VStack(spacing: 15) {
+                        TextField("Series Name", text: $seriesName)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding(.horizontal)
+                        
+                        TextField("Author Name", text: $authorName)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding(.horizontal)
+                        
+                        Button(action: {
+                            showResults = true
+                        }) {
+                            Text("Search *")
+                                .foregroundColor(.white)
+                                .frame(width: 200)
+                                .padding()
+                                .background(
+                                    !seriesName.isEmpty && !authorName.isEmpty ?
+                                    Color.blue : Color.gray
+                                )
+                                .cornerRadius(10)
+                        }
+                        .disabled(seriesName.isEmpty || authorName.isEmpty)
                     }
-                    .disabled(seriesName.isEmpty || authorName.isEmpty)
+                    .padding()
+                    .navigationDestination(isPresented: $showResults) {
+                        SeriesResultsView(
+                            seriesName: seriesName,
+                            authorName: authorName
+                        )
+                    }
+                    
+                    Spacer()
                 }
-                .padding()
-                
-                NavigationLink(
-                    destination: SeriesResultsView(
-                        seriesName: seriesName,
-                        authorName: authorName
-                    ),
-                    isActive: $showResults
-                ) {
-                    EmptyView()
-                }
-                
-                Spacer()
+                .navigationBarHidden(true)
             }
-            .navigationBarHidden(true)
+            Spacer()
+            Text("* This app uses the Google Books API and may not be complete or accurate.")
+                .padding(.horizontal)
         }
     }
 }

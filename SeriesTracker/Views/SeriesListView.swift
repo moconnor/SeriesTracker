@@ -15,16 +15,6 @@ struct SeriesListView: View {
     @State private var newSeriesName = ""
     @State private var createNewSeries = false
     
-    func seriesLine(series: Series) -> some View {
-        HStack {
-            Text(series.name)
-            Text("[\(series.books.count) books]")
-            Spacer()
-            Image(systemName: series.readStatus().statusIcon())
-                .foregroundColor(series.readStatus().statusColor())
-        }
-    }
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -35,7 +25,8 @@ struct SeriesListView: View {
                         Section(header: Text("My Book Series")) {
                             ForEach(series) { bookSeries in
                                 NavigationLink(destination: SeriesDetailView(series: bookSeries)) {
-                                    seriesLine(series: bookSeries)
+                                    //seriesLine(series: bookSeries)
+                                    SeriesRowView(series: bookSeries)
                                     }
                                 }
                             

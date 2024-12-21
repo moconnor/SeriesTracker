@@ -1,0 +1,1002 @@
+{
+  "kind": "books#volumes",
+  "totalItems": 13,
+  "items": [
+    {
+      "kind": "books#volume",
+      "id": "rs0bmqRrTBYC",
+      "etag": "R7/zqDlV15E",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/rs0bmqRrTBYC",
+      "volumeInfo": {
+        "title": "How Firm a Foundation",
+        "authors": [
+          "David Weber"
+        ],
+        "publisher": "St. Martin's Press",
+        "publishedDate": "2012-07-31",
+        "description": "The new novel in the bestselling series that began with \"Off Armageddon Reef, By Schism Rent Asunder, By Heresies Distressed, \" and the top 10 \"New York Times\" bestseller \"A Mighty Fortress.\"",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0765361256"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780765361257"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 852,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "1.4.5.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=rs0bmqRrTBYC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=rs0bmqRrTBYC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=rs0bmqRrTBYC&printsec=frontcover&dq=intitle:safehold+inauthor:weber&hl=&cd=1&source=gbs_api",
+        "infoLink": "http://books.google.com/books?id=rs0bmqRrTBYC&dq=intitle:safehold+inauthor:weber&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/How_Firm_a_Foundation.html?hl=&id=rs0bmqRrTBYC"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "PARTIAL",
+        "embeddable": true,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=rs0bmqRrTBYC&hl=&source=gbs_api",
+        "accessViewStatus": "SAMPLE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "The new novel in the bestselling series that began with &quot;Off Armageddon Reef, By Schism Rent Asunder, By Heresies Distressed, &quot; and the top 10 &quot;New York Times&quot; bestseller &quot;A Mighty Fortress.&quot;"
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "eLW7CwAAQBAJ",
+      "etag": "QSf3nkz1/zU",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/eLW7CwAAQBAJ",
+      "volumeInfo": {
+        "title": "At the Sign of Triumph",
+        "subtitle": "A Novel in the Safehold Series",
+        "authors": [
+          "David Weber"
+        ],
+        "publisher": "Macmillan",
+        "publishedDate": "2016-11-08",
+        "description": "At the Sign of Triumph: David Weber's New York Times-bestselling Safehold series begun with Off Armageddon Reef, By Schism Rent Asunder, By Heresies Distressed, A Mighty Fortress and How Firm a Foundation. The Church of God Awaiting's triumph over Charis was inevitable. Despite its prosperity, the Charis was a single, small island realm. It boasted less than two percent of the total population of Safehold. How could it possibly resist total destruction? The Church had every reason to be confident of a swift, crushing victory, an object lesson to other rebels. But Charis had something far more powerful than simple numbers. It had a king, a crown prince, and a navy prepared to die where they stood in its defense. It had the Brethren of Saint Zherneau, who knew the truth about Safehold's founding. Who knew that the Church of God Awaiting was a monstrous lie. And it had Merlin Athrawes, last survivor of long-vanished Earth. Merlin, the cybernetic avatar of a woman dead over a thousand years, who was determined to break the Church's grip upon the human mind and soul. So after eight years of war, it is not Charis but the Church that stands upon the brink of defeat. But the Church still commands immense resources, and — faced with the unthinkable — it’s decided that it, too, must embrace the forbidden technology which has carried Charis so far. In the end, it is simple, for only one can survive. The lines are drawn, the navies and armies have been raised, and all of Safehold is poised for the final battle between those who believe in freedom and those who would crush it forever. Safehold Series 1. Off Armageddon Reef 2. By Schism Rent Asunder 3. By Heresies Distressed 4. A Mighty Fortress 5. How Firm A Foundation 6. Midst Toil and Tribulation 7. Like A Mighty Army 8. Hell's Foundations Quiver 9. At the Sign of Triumph 10. Through Fiery Trials At the Publisher's request, this title is being sold without Digital Rights Management Software (DRM) applied.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9781429952118"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "1429952113"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": false
+        },
+        "pageCount": 765,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": true,
+        "contentVersion": "1.12.11.0.preview.2",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=eLW7CwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=eLW7CwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=eLW7CwAAQBAJ&printsec=frontcover&dq=intitle:safehold+inauthor:weber&hl=&cd=2&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=eLW7CwAAQBAJ&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=eLW7CwAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 9.99,
+          "currencyCode": "USD"
+        },
+        "retailPrice": {
+          "amount": 9.99,
+          "currencyCode": "USD"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=eLW7CwAAQBAJ&rdid=book-eLW7CwAAQBAJ&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 9990000,
+              "currencyCode": "USD"
+            },
+            "retailPrice": {
+              "amountInMicros": 9990000,
+              "currencyCode": "USD"
+            },
+            "giftable": true
+          }
+        ]
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "PARTIAL",
+        "embeddable": true,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": true
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=eLW7CwAAQBAJ&hl=&source=gbs_api",
+        "accessViewStatus": "SAMPLE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "At the Sign of Triumph: David Weber&#39;s New York Times-bestselling Safehold series begun with Off Armageddon Reef, By Schism Rent Asunder, By Heresies Distressed, A Mighty Fortress and How Firm a Foundation."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "FHGcCgAAQBAJ",
+      "etag": "d+JnXzl6Awg",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/FHGcCgAAQBAJ",
+      "volumeInfo": {
+        "title": "Hell's Foundations Quiver",
+        "subtitle": "A Novel in the Safehold Series",
+        "authors": [
+          "David Weber"
+        ],
+        "publisher": "Macmillan",
+        "publishedDate": "2015-10-13",
+        "description": "Centuries after survivors of the first human-alien war start over in an unindustrialized region under religious rule, a cybernetic avatar reawakens to restart humanity's progress and claim its place in the universe.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9780765321879"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "0765321874"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 785,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.1.1.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=FHGcCgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=FHGcCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=FHGcCgAAQBAJ&printsec=frontcover&dq=intitle:safehold+inauthor:weber&hl=&cd=3&source=gbs_api",
+        "infoLink": "http://books.google.com/books?id=FHGcCgAAQBAJ&dq=intitle:safehold+inauthor:weber&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Hell_s_Foundations_Quiver.html?hl=&id=FHGcCgAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "PARTIAL",
+        "embeddable": true,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=FHGcCgAAQBAJ&hl=&source=gbs_api",
+        "accessViewStatus": "SAMPLE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "Centuries after survivors of the first human-alien war start over in an unindustrialized region under religious rule, a cybernetic avatar reawakens to restart humanity&#39;s progress and claim its place in the universe."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "hVMbnwEACAAJ",
+      "etag": "hs5WR/2kad8",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/hVMbnwEACAAJ",
+      "volumeInfo": {
+        "title": "Safehold Boxed Set 1",
+        "authors": [
+          "David Weber"
+        ],
+        "publisher": "Tor Science Fiction",
+        "publishedDate": "2014-08-26",
+        "description": "TheNew York Times bestselling series begins...A boxed set of Books 1-3 in David Weber's Safehold series Includes one copy each of: Off Armageddon Reef (978-0-7653-5397-9, $8.99/$10.99) By Schism Rent Asunder (978-7653-5398-6, $8.99/$10.99) By Heresies Distressed (978-0-7653-5399-3, $7.99/$9.99)",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0765377535"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780765377531"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 0,
+        "printType": "BOOK",
+        "categories": [
+          "Fantasy fiction, American"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=hVMbnwEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=hVMbnwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=hVMbnwEACAAJ&dq=intitle:safehold+inauthor:weber&hl=&cd=4&source=gbs_api",
+        "infoLink": "http://books.google.com/books?id=hVMbnwEACAAJ&dq=intitle:safehold+inauthor:weber&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Safehold_Boxed_Set_1.html?hl=&id=hVMbnwEACAAJ"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=hVMbnwEACAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "A boxed set of Books 1-3 in David Weber&#39;s Safehold series Includes one copy each of: Off Armageddon Reef (978-0-7653-5397-9, $8.99/$10.99) By Schism Rent Asunder (978-7653-5398-6, $8.99/$10.99) By Heresies Distressed (978-0-7653-5399-3, $7 ..."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "NPhWDwAAQBAJ",
+      "etag": "GZD/iLIYKJY",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/NPhWDwAAQBAJ",
+      "volumeInfo": {
+        "title": "Through Fiery Trials",
+        "subtitle": "A Novel in the Safehold Series",
+        "authors": [
+          "David Weber"
+        ],
+        "publisher": "Tor Books",
+        "publishedDate": "2019-01-08",
+        "description": "With new alliances forged and old regimes fractured, Merlin—the cybernetic avatar of Earth's last survivor and immortal beacon to humanity—and the colonies of Safehold have many adventures ahead in Through Fiery Trials, the continuation of David Weber's New York Times bestselling military science fiction series Those on the side of progressing humanity through advanced technology have finally triumphed over their oppressors. The unholy war between the small but mighty island realm of Charis and the radical, luddite Church of God's Awaiting has come to an end. However, even though a provisional veil of peace has fallen over human colonies, the quiet will not last. For Safehold is a broken world, and as international alliances shift and Charis charges on with its precarious mission of global industrialization, the shifting plates of the new world order are bound to clash. Yet, an uncertain future isn't the only danger Safehold faces. Long-thought buried secrets and prophetic promises come to light, proving time is a merciless warden who never forgets. “Vast, complex, intricate, subtle, and unlaydownable....The biggest thing in science fiction since Isaac Asimov's Foundation series.”—Dave Duncan on the Safehold series Safehold Series 1. Off Armageddon Reef 2. By Schism Rent Asunder 3. By Heresies Distressed 4. A Mighty Fortress 5. How Firm A Foundation 6. Midst Toil and Tribulation 7. Like A Mighty Army 8. Hell's Foundations Quiver 9. At the Sign of Triumph 10. Through Fiery Trials At the Publisher's request, this title is being sold without Digital Rights Management Software (DRM) applied.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9781429951852"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "1429951850"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": false
+        },
+        "pageCount": 751,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": true,
+        "contentVersion": "1.6.6.0.preview.2",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=NPhWDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=NPhWDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=NPhWDwAAQBAJ&printsec=frontcover&dq=intitle:safehold+inauthor:weber&hl=&cd=5&source=gbs_api",
+        "infoLink": "https://play.google.com/store/books/details?id=NPhWDwAAQBAJ&source=gbs_api",
+        "canonicalVolumeLink": "https://play.google.com/store/books/details?id=NPhWDwAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "FOR_SALE",
+        "isEbook": true,
+        "listPrice": {
+          "amount": 11.99,
+          "currencyCode": "USD"
+        },
+        "retailPrice": {
+          "amount": 11.99,
+          "currencyCode": "USD"
+        },
+        "buyLink": "https://play.google.com/store/books/details?id=NPhWDwAAQBAJ&rdid=book-NPhWDwAAQBAJ&rdot=1&source=gbs_api",
+        "offers": [
+          {
+            "finskyOfferType": 1,
+            "listPrice": {
+              "amountInMicros": 11990000,
+              "currencyCode": "USD"
+            },
+            "retailPrice": {
+              "amountInMicros": 11990000,
+              "currencyCode": "USD"
+            },
+            "giftable": true
+          }
+        ]
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "PARTIAL",
+        "embeddable": true,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": true
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=NPhWDwAAQBAJ&hl=&source=gbs_api",
+        "accessViewStatus": "SAMPLE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "With new alliances forged and old regimes fractured, Merlin—the cybernetic avatar of Earth&#39;s last survivor and immortal beacon to humanity—and the colonies of Safehold have many adventures ahead in Through Fiery Trials, the continuation ..."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "3YwXAwAAQBAJ",
+      "etag": "/YT1COmUMYM",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/3YwXAwAAQBAJ",
+      "volumeInfo": {
+        "title": "By Schism Rent Asunder",
+        "authors": [
+          "David Weber"
+        ],
+        "publisher": "Macmillan",
+        "publishedDate": "2009-06-02",
+        "description": "The sequel to the New York Times bestseller Off Armageddon Reef",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9780765353986"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "0765353989"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 737,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.2.1.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=3YwXAwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=3YwXAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=3YwXAwAAQBAJ&printsec=frontcover&dq=intitle:safehold+inauthor:weber&hl=&cd=6&source=gbs_api",
+        "infoLink": "http://books.google.com/books?id=3YwXAwAAQBAJ&dq=intitle:safehold+inauthor:weber&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/By_Schism_Rent_Asunder.html?hl=&id=3YwXAwAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "PARTIAL",
+        "embeddable": true,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=3YwXAwAAQBAJ&hl=&source=gbs_api",
+        "accessViewStatus": "SAMPLE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "The sequel to the New York Times bestseller Off Armageddon Reef"
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "Qo5c4IIHaFUC",
+      "etag": "KwXqtjneGHQ",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/Qo5c4IIHaFUC",
+      "volumeInfo": {
+        "title": "Midst Toil and Tribulation",
+        "authors": [
+          "David Weber"
+        ],
+        "publisher": "St. Martin's Press",
+        "publishedDate": "2013-07-30",
+        "description": "The hotly anticpaited sixth volume in the New York Times bestselling Safehold series.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0765361264"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780765361264"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 826,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.24.12.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=Qo5c4IIHaFUC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=Qo5c4IIHaFUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=Qo5c4IIHaFUC&printsec=frontcover&dq=intitle:safehold+inauthor:weber&hl=&cd=7&source=gbs_api",
+        "infoLink": "http://books.google.com/books?id=Qo5c4IIHaFUC&dq=intitle:safehold+inauthor:weber&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Midst_Toil_and_Tribulation.html?hl=&id=Qo5c4IIHaFUC"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "PARTIAL",
+        "embeddable": true,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=Qo5c4IIHaFUC&hl=&source=gbs_api",
+        "accessViewStatus": "SAMPLE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "The hotly anticpaited sixth volume in the New York Times bestselling Safehold series."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "FMkK0AEACAAJ",
+      "etag": "H/jRm2HVFyo",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/FMkK0AEACAAJ",
+      "volumeInfo": {
+        "title": "Off Armageddon Reef",
+        "authors": [
+          "David Weber"
+        ],
+        "publisher": "Tor Trade",
+        "publishedDate": "2008",
+        "description": "Science fiction roman.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "1250326419"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9781250326416"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 0,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=FMkK0AEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=FMkK0AEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=FMkK0AEACAAJ&dq=intitle:safehold+inauthor:weber&hl=&cd=8&source=gbs_api",
+        "infoLink": "http://books.google.com/books?id=FMkK0AEACAAJ&dq=intitle:safehold+inauthor:weber&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Off_Armageddon_Reef.html?hl=&id=FMkK0AEACAAJ"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=FMkK0AEACAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "A &quot;New York Times&quot; bestseller."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "dOFHtf32uMIC",
+      "etag": "gCBYzVtfT80",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/dOFHtf32uMIC",
+      "volumeInfo": {
+        "title": "A Mighty Fortress",
+        "authors": [
+          "David Weber"
+        ],
+        "publisher": "St. Martin's Press",
+        "publishedDate": "2011-03",
+        "description": "The sequel to the New York Times bestsellers Off Armageddon Reef, By Schism Rent Asunder, and By Heresies Distressed.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0765354071"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780765354075"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 1156,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": true,
+        "contentVersion": "1.10.12.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=dOFHtf32uMIC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=dOFHtf32uMIC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=dOFHtf32uMIC&printsec=frontcover&dq=intitle:safehold+inauthor:weber&hl=&cd=9&source=gbs_api",
+        "infoLink": "http://books.google.com/books?id=dOFHtf32uMIC&dq=intitle:safehold+inauthor:weber&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/A_Mighty_Fortress.html?hl=&id=dOFHtf32uMIC"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "PARTIAL",
+        "embeddable": true,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=dOFHtf32uMIC&hl=&source=gbs_api",
+        "accessViewStatus": "SAMPLE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "The sequel to the New York Times bestsellers Off Armageddon Reef, By Schism Rent Asunder, and By Heresies Distressed."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "5J-PvgEACAAJ",
+      "etag": "v11AJA1D2oQ",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/5J-PvgEACAAJ",
+      "volumeInfo": {
+        "title": "Like a Mighty Army",
+        "subtitle": "A Novel in the Safehold Series",
+        "authors": [
+          "David Weber"
+        ],
+        "publisher": "Tor Science Fiction",
+        "publishedDate": "2014-12-30",
+        "description": "David Weber's Like a Mighty Army is the hotly anticipated seventh volume in the New York Times bestselling Safehold series For centuries, the world of Safehold, last redoubt of the human race, lay under the unchallenged rule of the Church of God Awaiting. The Church permitted nothing new-no new inventions, no new understandings of the world. What no one knew was that the Church was an elaborate fraud--a high-tech system established by a rebel faction of Safehold's founders, meant to keep humanity hidden from the powerful alien race that had destroyed old Earth. Then awoke Merlyn Athrawes, cybernetic avatar of a warrior a thousand years dead, felled in the war in which Earth was lost. Monk, warrior, counselor to princes and kings, Merlyn has one purpose: to restart the history of the too-long-hidden human race. And now the fight is thoroughly underway. The island empire of Charis has declared its independence from the Church, and with Merlyn's help has vaulted forward into a new age of steam-powered efficiency. Fending off the wounded Church, Charis has drawn more and more of the countries of Safehold to the cause of independence and self-determination. But at a heavy cost in bloodshed and loss--a cost felt by nobody more keenly that Merlyn Athrawes. The wounded Church is regrouping. Its armies and resources are vast. The fight for humanity's future isn't over, and won't be over soon... Safehold Series 1. Off Armageddon Reef 2. By Schism Rent Asunder 3. By Heresies Distressed 4. A Mighty Fortress 5. How Firm A Foundation 6. Midst Toil and Tribulation 7. Like A Mighty Army 8. Hell's Foundations Quiver 9. At the Sign of Triumph",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0765361272"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780765361271"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 0,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=5J-PvgEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=5J-PvgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=5J-PvgEACAAJ&dq=intitle:safehold+inauthor:weber&hl=&cd=10&source=gbs_api",
+        "infoLink": "http://books.google.com/books?id=5J-PvgEACAAJ&dq=intitle:safehold+inauthor:weber&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Like_a_Mighty_Army.html?hl=&id=5J-PvgEACAAJ"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=5J-PvgEACAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "David Weber&#39;s Like a Mighty Army is the hotly anticipated seventh volume in the New York Times bestselling Safehold series For centuries, the world of Safehold, last redoubt of the human race, lay under the unchallenged rule of the Church ..."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "MW8pEQAAQBAJ",
+      "etag": "CDv+I6xFdlI",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/MW8pEQAAQBAJ",
+      "volumeInfo": {
+        "title": "At the Sign of Triumph",
+        "subtitle": "A Novel in the Safehold Series (#9)",
+        "authors": [
+          "David Weber"
+        ],
+        "publisher": "Tor Books",
+        "publishedDate": "2017-10-31",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9781250376404"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "1250376408"
+          }
+        ],
+        "readingModes": {
+          "text": true,
+          "image": false
+        },
+        "pageCount": 0,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=MW8pEQAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=MW8pEQAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=MW8pEQAAQBAJ&dq=intitle:safehold+inauthor:weber&hl=&cd=11&source=gbs_api",
+        "infoLink": "http://books.google.com/books?id=MW8pEQAAQBAJ&dq=intitle:safehold+inauthor:weber&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/At_the_Sign_of_Triumph.html?hl=&id=MW8pEQAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=MW8pEQAAQBAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "At the Sign of Triumph: David Weber&#39;s New York Times-bestselling Safehold series begun with Off Armageddon Reef, By Schism Rent Asunder, By Heresies Distressed, A Mighty Fortress and How Firm a Foundation."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "MBgL0AEACAAJ",
+      "etag": "Ae7nUBJBdZI",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/MBgL0AEACAAJ",
+      "volumeInfo": {
+        "title": "Like a Mighty Army",
+        "authors": [
+          "David Weber"
+        ],
+        "publishedDate": "2014-12-30",
+        "description": "\"For centuries, the world of Safehold, last redoubt of the human race, lay under the unchallenged rule of the Church of God Awaiting. The Church permitted nothing new--no new inventions, no new understandings of the world. What no one knew was that the Church was an elaborate fraud--a high-tech system established by a rebel faction of Safehold's founders, meant to keep humanity hidden from the powerful alien race that had destroyed old Earth. Then awoke Merlyn Athrawes, cybvernetic avatar of a warrior a thousand years dead, felled in the war in which Earth was lost. Monk, warrior, counselor to princes and kings, Merlyn has one purpose: to restart the history of the too-long-hidden human race. And now the fight is thoroughly underway. The island empire of Charis has declared its independence from the Church, and with Merlyn's help has vaulted forward into a new age of steam-powered efficiency. Fending off the wounded Church, Charis has drawn more and more of the countries of Safehold to the cause of independence and self-determination. But at a heavy cost in bloodshed and loss--a cost felt by nobody more keenly that Merlyn Athrawes. The wounded Church is regrouping. Its armies and resources are vast. The fight for humanity's future isn't over, and won't be over soon.\"--",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "1250326117"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9781250326119"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 0,
+        "printType": "BOOK",
+        "categories": [
+          "Space warfare"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=MBgL0AEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=MBgL0AEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=MBgL0AEACAAJ&dq=intitle:safehold+inauthor:weber&hl=&cd=12&source=gbs_api",
+        "infoLink": "http://books.google.com/books?id=MBgL0AEACAAJ&dq=intitle:safehold+inauthor:weber&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Like_a_Mighty_Army.html?hl=&id=MBgL0AEACAAJ"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=MBgL0AEACAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "&quot;For centuries, the world of Safehold, last redoubt of the human race, lay under the unchallenged rule of the Church of God Awaiting."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "Sv0ymQEACAAJ",
+      "etag": "35q2cjFhz0E",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/Sv0ymQEACAAJ",
+      "volumeInfo": {
+        "title": "By Heresies Distressed",
+        "subtitle": "A Novel in the Safehold Series (#3)",
+        "authors": [
+          "David Weber"
+        ],
+        "publisher": "Tor Science Fiction",
+        "publishedDate": "2010-03-02",
+        "description": "In David Weber's By Heresies Distressed, the battle for the soul of the planet Safehold has begun. The Kingdom of Charis and the Kingdom of Chisholm have joined together, pledged to stand against the tyranny of a corrupt Church. The youthful Queen Sharleyan of Chisholm has wed King Cayleb of Charis, forging a single dynasty, a single empire, dedicated to the defense of human freedom. Crowned Empress of that empire, Sharleyan has found in Cayleb's arms the love she never dared hope for in a \"marriage of state.\" In Cayleb's cause, his defiance of the ruthless Group of Four who govern mother Church, she has found the task to which she can commit her mind and her courage. It is a cause for which she was born. Yet there are things Sharleyan still does not know. Secrets Cayleb has not been permitted to share, even with her. Secrets like the true story of humanity on Safehold. Like the intricate web of lies, deception, and fabricated \"religion\" which have chained humanity for almost a thousand years. Like the existence of the genocidal alien Gbaba, waiting to complete mankind's destruction should humans ever attract their attention once more. Like the existence of a young woman, Nimue Alban, nine hundred years dead, whose heart, mind, and memories live on within the android body of the warrior-monk she knows as Merlin. And so Empress Sharleyan faces the great challenge of her life unaware of all that task truly entails...or of how the secrets the man who loves her cannot share may threaten all they have achieved between them...and her own life. Safehold Series 1. Off Armageddon Reef 2. By Schism Rent Asunder 3. By Heresies Distressed 4. A Mighty Fortress 5. How Firm A Foundation 6. Midst Toil and Tribulation 7. Like A Mighty Army 8. Hell's Foundations Quiver 9. At the Sign of Triumph",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0765353997"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780765353993"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 640,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=Sv0ymQEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=Sv0ymQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=Sv0ymQEACAAJ&dq=intitle:safehold+inauthor:weber&hl=&cd=13&source=gbs_api",
+        "infoLink": "http://books.google.com/books?id=Sv0ymQEACAAJ&dq=intitle:safehold+inauthor:weber&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/By_Heresies_Distressed.html?hl=&id=Sv0ymQEACAAJ"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=Sv0ymQEACAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "In David Weber&#39;s By Heresies Distressed, the battle for the soul of the planet Safehold has begun."
+      }
+    }
+  ]
+}

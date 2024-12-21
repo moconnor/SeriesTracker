@@ -20,9 +20,10 @@ struct SeriesResultsView: View {
             if isLoading {
                 ProgressView("Searching for books...")
             } else {
+                Text("\(books.count) books found for \(seriesName)")
                 List {
                     ForEach(books, id: \.title) { book in
-                        BookRowView(book: book)
+                        BookRowView(bookInfo: book)
                     }
                 }
                 .listStyle(PlainListStyle())
