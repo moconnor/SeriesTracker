@@ -20,10 +20,10 @@ struct SeriesDetailView: View {
         NavigationStack {
             VStack(alignment: .leading) {
                 
-                Text(series.name)
+                Text(series.name + " Details")
                     .font(.title)
                     .bold()
-                Text(series.readStatus().rawValue)
+                Text("Status: " + series.readStatus().rawValue)
                     .font(.headline)
                 
                 Divider()

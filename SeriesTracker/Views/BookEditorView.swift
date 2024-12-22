@@ -16,7 +16,10 @@ struct BookEditorView: View {
     @State private var book: Book
     @State private var showingNewAuthorSheet = false
     @State private var newAuthorName = ""
-    
+    @State private var isNewBook: Bool = false
+    @State private var title: String = ""
+    @State private var selectedAuthor: Author?
+    @State private var author: Author = Author(name: "Not Selected")
     // Fetch available authors and series
     @Query(sort: \Author.name) private var authors: [Author]
 
@@ -33,6 +36,7 @@ struct BookEditorView: View {
             _book = State(initialValue: newBook)
             editorTitle = "Add Book"
             buttonName = "Add Book"
+            isNewBook = true
         }
         self.series =  series
     }
@@ -41,11 +45,23 @@ struct BookEditorView: View {
         NavigationView {
             Form {
                 Section(header: Text("Basic Information")) {
-                    TextField("Title", text: $book.title)
+                    TextField("Title", text: $title)
                     
-                    // Author picker with add new option
-                    authorSelectionView
-                    
+                   // authorSelectionView
+                    Picker("Author:", selection: $selectedAuthor) {
+                        ForEach(authors) { author in
+                            Text(author.name)
+                                .tag(author as Author?)
+                        }
+                    }
+                    .onChange(of: selectedAuthor) { _, newAuthor in
+                        if let newAuthor {
+                            author = newAuthor
+                        }
+                    }
+                    .onAppear {
+                        selectedAuthor = series.author
+                    }
                 }
                 
                 Section(header: Text("Reading Status")) {
@@ -85,7 +101,7 @@ struct BookEditorView: View {
                     Button(buttonName) {
                         saveBook()
                     }
-                    .disabled(book.title.isEmpty)
+                    .disabled(title.isEmpty)
                 }
             }
             .navigationTitle(editorTitle)
@@ -99,53 +115,7 @@ struct BookEditorView: View {
             }
         }
     }
-    
-    private var authorSelectionView: some View {
-        Menu {
-            // Optional: No author
-            Button(action: { book.author = nil }) {
-                HStack {
-                    Text("None")
-                    if book.author == nil {
-                        Image(systemName: "checkmark")
-                    }
-                }
-            }
-            
-            if !authors.isEmpty {
-                Divider()
-            }
-            
-            // Existing authors
-            ForEach(authors) { author in
-                Button(action: { book.author = author }) {
-                    HStack {
-                        Text(author.name)
-                        if author.id == book.author?.id {
-                            Image(systemName: "checkmark")
-                        }
-                    }
-                }
-            }
-            
-            Divider()
-            
-            // Add new author option
-            Button(action: {
-                showingNewAuthorSheet = true
-            }) {
-                Label("Add New Author", systemImage: "plus.circle")
-            }
-        } label: {
-            HStack {
-                Text("Author")
-                Spacer()
-                Text(series.author.name)
-                    .foregroundColor(book.author == nil ? .gray : .primary)
-            }
-        }
-    }
-    
+        
     private var ratingView: some View {
         HStack {
             ForEach(1...5, id: \.self) { index in
@@ -191,7 +161,7 @@ struct BookEditorView: View {
     }
     
     private func saveBook() {
-        guard !book.title.isEmpty else { return }
+        guard !title.isEmpty else { return }
         
         // Validate and adjust dates based on status
         switch book.readStatus {
@@ -209,7 +179,10 @@ struct BookEditorView: View {
         }
         
         do {
-            if book.id == UUID() {
+            book.title = title
+            book.series = series
+            book.author = selectedAuthor
+            if isNewBook {
                 modelContext.insert(book)
             }
             try modelContext.save()

@@ -25,7 +25,6 @@ struct SeriesListView: View {
                         Section(header: Text("My Book Series")) {
                             ForEach(series) { bookSeries in
                                 NavigationLink(destination: SeriesDetailView(series: bookSeries)) {
-                                    //seriesLine(series: bookSeries)
                                     SeriesRowView(series: bookSeries)
                                     }
                                 }

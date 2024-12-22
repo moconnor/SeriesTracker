@@ -14,15 +14,15 @@ struct BookEditor: View {
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) var dismiss
-    
+    @Query(sort: \Author.name) private var authors: [Author]
+
     @State  var title = ""
     @State  var author: Author = Author(name: "Unknown")
     @State  var genre: String = ""
     @State  var readStatus: ReadStatus = .notStarted
     @State  var rating: Int = 0
-    @State  var isComplete: Bool = false
-    @State  var review: String = ""
-    
+    @State private var selectedAuthor: Author?
+
     var editorTitle: String {
         book == nil ? "Add Book" : "Edit Book"
     }
@@ -30,57 +30,61 @@ struct BookEditor: View {
         book == nil ? "Add Book" : "Update Book"
     }
     
-    
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Book")) {
+                Section(header: Text("Basic Information")) {
                     TextField("Title", text: $title)
-                    TextField("Author", text: $author.name)
-                    TextField("Genre", text: $genre)
+
+                    Text("Pick one of \(authors.count) authors") // have 5 authors but none displayed!!!???!!!
                     
-//                    HStack {
-//                        Button("Cancel") {
-//                            dismiss()
-//                        }
-//                        
-//                        Spacer()
-//                        
-//                        Button(saveButtonTitle) {
-//                            if book == nil {
-//                                let newBook = Book(title: title, author: author)
-//                                newBook.genre = genre
-//                                newBook.status = readStatus
-//                                series.books.append(newBook)
-//                                context.insert(newBook)
-//                            }
-//                            try? context.save()
-//                            dismiss()
-//                        }
-//                        .disabled(title.isEmpty || author.isEmpty)
-//                    }
-//                    .buttonStyle(.borderedProminent)
-                }
-            }
-            .onAppear {
-                if let book {
-                    title = book.title
-                    author = book.author!
-                   // genre = book.genre
-                    readStatus = book.readStatus
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text(editorTitle)
+                    Picker("Author:", selection: $selectedAuthor) {
+                        ForEach(authors) { author in
+                            Text(author.name)
+                                .tag(author as Author?)
+                        }
+                    }
+                    .onChange(of: selectedAuthor) { _, newAuthor in
+                        if let newAuthor {
+                            author = newAuthor
+                        }
+                    }
+                    .onAppear {
+                        if let book {
+                            selectedAuthor = book.author
+                        }
+                    }
                 }
             }
         }
+        .onAppear {
+            if let book {
+                title = book.title
+                author = book.author!
+                readStatus = book.readStatus
+            }
+        }
+        .navigationTitle(editorTitle)
     }
+    
 }
 
 #Preview {
     let series = Series.randomSeries()
     let book = series.books.randomElement()
+    let authorDB = Author.authorDatabase(author: Author(name: "Unknown"))
+
     BookEditor(book: book, series: series)
+        .modelContainer(authorDB)
 }
+
+#Preview {
+    let series = Series.randomSeries()
+    let book = series.books.randomElement()
+    let authorDB = Author.authorDatabase(author: series.author)
+
+    BookEditor(book: book, series: series)
+        .modelContainer(authorDB)
+
+}
+
