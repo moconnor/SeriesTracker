@@ -44,11 +44,12 @@ extension Series {
         return word.capitalized + " Series"
     }
     
-    static func randomSeries() -> Series {
+    static func randomSeries(withBooks: Bool = true) -> Series {
         let series = Series(name: randomSeriesTitles(), author: Author.randomAuthor())
-        series.status = randomStatus()
-        for _ in 0..<Int.random(in: 0..<5) {
-            series.books.append(Book.randomBook(author: series.author))
+        if withBooks {
+            for _ in 0..<Int.random(in: 1..<5) {
+                series.books.append(Book.randomBook(author: series.author))
+            }
         }
         return series
     }
@@ -69,8 +70,14 @@ extension Series {
         return preview.container
     }
     
-    static func sampleDB(preview: Preview, author: Author) -> ModelContainer {
-        let preview = Preview([Author.self])
+    static func sampleDB() -> ModelContainer {
+        var bookSeries: [Series] = []
+        let preview = Preview([Author.self, Book.self, Series.self])
+        let seriesCount = Int.random(in: 0..<seriesNames.count)
+        for _ in 0..<seriesCount {
+            bookSeries.append(randomSeries())
+        }
+        preview.add(items: bookSeries)
         return preview.container
     }
 

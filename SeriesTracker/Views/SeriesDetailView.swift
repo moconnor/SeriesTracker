@@ -15,6 +15,7 @@ struct SeriesDetailView: View {
     @State private var newBookTitle = ""
     @State private var newBookOrder = 1
     @State private var addingNewBook = false
+    @State private var editSeries: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -32,12 +33,6 @@ struct SeriesDetailView: View {
                         HStack {
                             Text(series.author.name)
                                 .font(.headline)
-                            Spacer()
-                            Button {
-                                showAuthorPicker()
-                            } label: {
-                                Image(systemName: "pencil")
-                            }
                         }
                         .padding(.horizontal)
                     }
@@ -47,32 +42,24 @@ struct SeriesDetailView: View {
                 
                 Divider()
             }
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        editSeries = true
+                    } label: {
+                        Image(systemName: "pencil")
+                            .imageScale(.large)
+                    }
+                }
+            }
             .padding()
+            .sheet(isPresented: $editSeries) {
+                SeriesEditorView(series: series)
+            }
         }
         
     }
 }
-
-private func showAuthorPicker() {
-    // Implement author selection for series
-}
-
-//    private func addNewBook() {
-//        let newBook = Book(title: newBookTitle, seriesOrder: newBookOrder)
-//        series.books.append(newBook)
-//        modelContext.insert(newBook)
-//        newBookTitle = ""
-//        newBookOrder += 1
-//    }
-
-//    private func deleteBooks(at offsets: IndexSet) {
-//        for index in offsets {
-//            let book = series.books[index]
-//            modelContext.delete(book)
-//            series.books.remove(at: index)
-//        }
-//    }
-//}
 
 #Preview("No Books") {
     let author = Author(name: "Anonymous")

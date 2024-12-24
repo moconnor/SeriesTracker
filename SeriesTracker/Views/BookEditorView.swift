@@ -10,7 +10,7 @@ import SwiftData
 
 struct BookEditorView: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     var series: Series
     @State private var book: Book
@@ -20,7 +20,7 @@ struct BookEditorView: View {
     @State private var title: String = ""
     @State private var selectedAuthor: Author?
     @State private var author: Author = Author(name: "Not Selected")
-    // Fetch available authors and series
+ 
     @Query(sort: \Author.name) private var authors: [Author]
 
     private var editorTitle: String
@@ -31,6 +31,8 @@ struct BookEditorView: View {
             _book = State(initialValue: existingBook)
             editorTitle = "Edit Book"
             buttonName = "Update Book"
+            title = existingBook.title
+            author = existingBook.author ?? Author(name: "Not Selected")
         } else {
             let newBook = Book(title: "")
             _book = State(initialValue: newBook)
@@ -46,8 +48,7 @@ struct BookEditorView: View {
             Form {
                 Section(header: Text("Basic Information")) {
                     TextField("Title", text: $title)
-                    
-                   // authorSelectionView
+                    //Text("Pick from \(authors.count) authors")
                     Picker("Author:", selection: $selectedAuthor) {
                         ForEach(authors) { author in
                             Text(author.name)
@@ -107,7 +108,7 @@ struct BookEditorView: View {
             .navigationTitle(editorTitle)
             .navigationBarItems(trailing:
                 Button("Cancel") {
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 }
             )
             .sheet(isPresented: $showingNewAuthorSheet) {
@@ -186,7 +187,7 @@ struct BookEditorView: View {
                 modelContext.insert(book)
             }
             try modelContext.save()
-            presentationMode.wrappedValue.dismiss()
+            dismiss()
         } catch {
             print("Error saving book: \(error)")
         }
@@ -195,5 +196,15 @@ struct BookEditorView: View {
 
 #Preview {
     let series = Series.randomSeries()
+    let authorDB = Series.sampleDB()
     BookEditorView(series: series)
+        .modelContainer(authorDB)
+}
+
+#Preview {
+    let series = Series.randomSeries()
+    let authorDB = Series.sampleDB()
+    BookEditorView(book: series.books.first, series: series)
+        .modelContainer(authorDB)
+
 }

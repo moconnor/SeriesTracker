@@ -71,6 +71,7 @@ extension Author {
         let authors = [author,
                        randomAuthor(), randomAuthor(), randomAuthor(), randomAuthor()]
         let preview = Preview([Author.self])
+        print(authors)
         preview.add(items: authors)
         return preview.container
     }

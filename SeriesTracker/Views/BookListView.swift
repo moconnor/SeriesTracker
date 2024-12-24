@@ -28,9 +28,8 @@ struct BookListView: View {
             } else {
                 List {
                     Section(header: Text("Books In The Series")) {
-                        
                         ForEach(series.books) { book in
-                            NavigationLink(destination: BookDetailsView(book: book)) {
+                            NavigationLink(destination: BookDetailsView(book: book, series: series)) {
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text(book.title)
@@ -58,15 +57,16 @@ struct BookListView: View {
             BookEditorView(book: nil, series: series)
         }
     }
-
-
 }
 
 #Preview("No Books") {
-    BookListView(series: Series.randomSeries())
+    let series: Series = .randomSeries(withBooks: false)
+    BookListView(series: series)
 }
 
 #Preview("Books") {
     let series: Series = .randomSeries()
-    BookListView(series: series)
+    NavigationStack {
+        BookListView(series: series)
+    }
 }

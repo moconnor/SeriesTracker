@@ -9,16 +9,17 @@ import SwiftUI
 
 struct BookDetailsView: View {
     @Bindable var book: Book
+    var series: Series
+    
     @Environment(\.modelContext) private var modelContext
     @State private var showingAuthorPicker = false
     @State private var newAuthorName = ""
+    @State private var showBookEditor = false
     
     var body: some View {
         Form {
             Section(header: Text("Book Details")) {
                 Text("Title: \(book.title)")
-                
-                // Author Selection
                 HStack {
                     Text("Author:")
                     if let author = book.author {
@@ -27,11 +28,6 @@ struct BookDetailsView: View {
                         Text("Not Set")
                     }
                     Spacer()
-                    Button {
-                        showingAuthorPicker = true
-                    } label: {
-                        Image(systemName: "pencil")
-                    }
                 }
             }
             
@@ -72,17 +68,25 @@ struct BookDetailsView: View {
             }
         }
         .navigationTitle("Book Details")
-//        .sheet(isPresented: $showingAuthorPicker) {
-//            AuthorSelectionView(selectedAuthor: Binding(
-//                get: { book.author },
-//                set: { newAuthor in
-//                    book.author = newAuthor
-//                }
-//            ))
-//        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showBookEditor = true
+                } label: {
+                    Image(systemName: "pencil")
+                }
+            }
+   
+        }
+        .sheet(isPresented: $showBookEditor) {
+            BookEditorView(book: book, series: series)
+        }
     }
 }
 
 #Preview {
-    BookDetailsView(book: Book.randomBook())
+    NavigationView {
+        let series = Series.randomSeries()
+        BookDetailsView(book: series.books.randomElement()!, series: series)
+    }
 }
