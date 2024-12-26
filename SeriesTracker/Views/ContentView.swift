@@ -12,7 +12,6 @@ struct ContentView: View {
         TabView {
             Tab("Home", systemImage: "books.vertical.fill") {
                 SeriesListView()
-                    .modelContainer(for: [Series.self , Book.self, Author.self])
             }
             Tab("Search", systemImage: "magnifyingglass") {
                 SeriesSearchView()

@@ -12,6 +12,7 @@ struct SeriesTrackerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modelContainer(for: [Series.self , Book.self, Author.self])
         }
     }
     init() {
