@@ -20,9 +20,9 @@ struct BookEditorView: View {
     @State private var title: String = ""
     @State private var selectedAuthor: Author?
     @State private var author: Author = Author(name: "Not Selected")
- 
+    
     @Query(sort: \Author.name) private var authors: [Author]
-
+    
     private var editorTitle: String
     private var buttonName: String
     
@@ -87,10 +87,8 @@ struct BookEditorView: View {
                     }
                 }
                 
-                if book.readStatus == .completed {
-                    Section(header: Text("Rating")) {
-                        ratingView
-                    }
+                Section(header: Text("Rating")) {
+                    RatingsView(book: book)
                 }
                 
                 Section(header: Text("Notes")) {
@@ -107,33 +105,33 @@ struct BookEditorView: View {
             }
             .navigationTitle(editorTitle)
             .navigationBarItems(trailing:
-                Button("Cancel") {
-                    dismiss()
-                }
+                                    Button("Cancel") {
+                dismiss()
+            }
             )
             .sheet(isPresented: $showingNewAuthorSheet) {
                 newAuthorSheet
             }
         }
     }
-        
-    private var ratingView: some View {
-        HStack {
-            ForEach(1...5, id: \.self) { index in
-                Image(systemName: index <= (book.rating ?? 0) ? "star.fill" : "star")
-                    .foregroundColor(.yellow)
-                    .onTapGesture {
-                        book.rating = index
-                    }
-            }
-            if book.rating != nil {
-                Button(action: { book.rating = nil }) {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.gray)
-                }
-            }
-        }
-    }
+    
+//    private var ratingView: some View {
+//        HStack {
+//            ForEach(1...5, id: \.self) { index in
+//                Image(systemName: index <= (book.rating ?? 0) ? "star.fill" : "star")
+//                    .foregroundColor(.yellow)
+//                    .onTapGesture {
+//                        book.rating = index
+//                    }
+//            }
+//            if book.rating != nil {
+//                Button(action: { book.rating = nil }) {
+//                    Image(systemName: "xmark.circle.fill")
+//                        .foregroundColor(.gray)
+//                }
+//            }
+//        }
+//    }
     
     private var newAuthorSheet: some View {
         NavigationView {
@@ -148,7 +146,7 @@ struct BookEditorView: View {
                 trailing: Button("Add") {
                     addNewAuthor()
                 }
-                .disabled(newAuthorName.isEmpty)
+                    .disabled(newAuthorName.isEmpty)
             )
         }
     }
@@ -194,17 +192,17 @@ struct BookEditorView: View {
     }
 }
 
-#Preview {
+#Preview("Add Book") {
     let series = Series.randomSeries()
     let authorDB = Series.sampleDB()
     BookEditorView(series: series)
         .modelContainer(authorDB)
 }
 
-#Preview {
+#Preview("Edit Book") {
     let series = Series.randomSeries()
     let authorDB = Series.sampleDB()
     BookEditorView(book: series.books.first, series: series)
         .modelContainer(authorDB)
-
+    
 }

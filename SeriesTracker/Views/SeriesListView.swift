@@ -28,7 +28,6 @@ struct SeriesListView: View {
                                     SeriesRowView(series: bookSeries)
                                     }
                                 }
-                            
                             .onDelete(perform: deleteSeries)
                         }
                     }

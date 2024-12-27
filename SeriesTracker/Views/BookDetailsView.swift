@@ -55,13 +55,9 @@ struct BookDetailsView: View {
                                 set: { book.endDate = $0 }
                                ),
                                displayedComponents: .date)
-                    
-                    Picker("Rating", selection: $book.rating) {
-                        ForEach(0...5, id: \.self) { rating in
-                            Text(rating == 0 ? "No Rating" : "\(rating) ★").tag(rating as Int?)
-                        }
-                    }
                 }
+                
+                RatingsView(book: book)
                 
                 TextField("Notes", text: $book.notes, axis: .vertical)
                     .lineLimit(3...5)
@@ -76,7 +72,7 @@ struct BookDetailsView: View {
                     Image(systemName: "pencil")
                 }
             }
-   
+            
         }
         .sheet(isPresented: $showBookEditor) {
             BookEditorView(book: book, series: series)
