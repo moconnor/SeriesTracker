@@ -115,24 +115,6 @@ struct BookEditorView: View {
         }
     }
     
-//    private var ratingView: some View {
-//        HStack {
-//            ForEach(1...5, id: \.self) { index in
-//                Image(systemName: index <= (book.rating ?? 0) ? "star.fill" : "star")
-//                    .foregroundColor(.yellow)
-//                    .onTapGesture {
-//                        book.rating = index
-//                    }
-//            }
-//            if book.rating != nil {
-//                Button(action: { book.rating = nil }) {
-//                    Image(systemName: "xmark.circle.fill")
-//                        .foregroundColor(.gray)
-//                }
-//            }
-//        }
-//    }
-    
     private var newAuthorSheet: some View {
         NavigationView {
             Form {

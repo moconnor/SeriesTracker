@@ -50,7 +50,10 @@ extension Book {
     }
     
     static func randomBook() -> Book {
-        return Book(title: Book.randomBookTitle(), author: Author.randomAuthor())
+        let book = Book(title: Book.randomBookTitle(), author: Author.randomAuthor())
+        book.readStatus = randomStatus()
+        book.rating = Int.random(in: 1..<5)
+        return book
     }
     
     static func randomBook(author: Author) -> Book {

@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct BookListView: View {
-    var series: Series
+    var bookSeries: Series
     @State var addingNewBook: Bool = false
+    @Environment(\.modelContext) private var modelContext
+   // @Query(sort: \Series.name) var series: [Series]
     
     var body: some View {
         VStack {
-            if series.books.isEmpty {
+            if bookSeries.books.isEmpty {
                 ContentUnavailableView {
                     Label("No Books in this Series", systemImage: "book.closed")
                 } actions: {
@@ -28,8 +30,8 @@ struct BookListView: View {
             } else {
                 List {
                     Section(header: Text("Books In The Series")) {
-                        ForEach(series.books) { book in
-                            NavigationLink(destination: BookDetailsView(book: book, series: series)) {
+                        ForEach(bookSeries.books) { book in
+                            NavigationLink(destination: BookDetailsView(book: book, series: bookSeries)) {
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text(book.title)
@@ -54,19 +56,19 @@ struct BookListView: View {
             //        .onDelete(perform: deleteBooks)
         }
         .sheet(isPresented: $addingNewBook) {
-            BookEditorView(book: nil, series: series)
+            BookEditorView(book: nil, series: bookSeries)
         }
     }
 }
 
 #Preview("No Books") {
     let series: Series = .randomSeries(withBooks: false)
-    BookListView(series: series)
+    BookListView(bookSeries: series)
 }
 
 #Preview("Books") {
     let series: Series = .randomSeries()
     NavigationStack {
-        BookListView(series: series)
+        BookListView(bookSeries: series)
     }
 }

@@ -3,7 +3,7 @@
 //  SeriesTracker
 //
 //  Created by Michael O'Connor on 12/27/24.
-//  Based on example from Paul Hudson
+//  Based on an example from Paul Hudson
 
 import SwiftUI
 
@@ -17,7 +17,7 @@ struct RatingsView: View {
     var body: some View {
         HStack {
             Text("Rating:")
-            ForEach(1..<maxRating + 1, id: \.self) { number in
+            ForEach(1...maxRating, id: \.self) { number in
                 Button {
                     book.rating = number
                 } label: {
