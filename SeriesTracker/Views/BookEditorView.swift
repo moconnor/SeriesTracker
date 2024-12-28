@@ -65,12 +65,13 @@ struct BookEditorView: View {
                     }
                 }
                 
-                Section(header: Text("Reading Status")) {
-                    Picker("Status", selection: $book.readStatus) {
+                Section(header: Text("Reading Progress")) {
+                    Picker("Read Status", selection: $book.readStatus) {
                         ForEach(ReadStatus.allCases, id: \.self) { status in
-                            Text(status.rawValue).tag(status)
+                            Text(status.rawValue.capitalized).tag(status)
                         }
                     }
+                    .pickerStyle(SegmentedPickerStyle())
                     
                     if book.readStatus != .notStarted {
                         DatePicker("Start Date", selection: Binding(
@@ -95,20 +96,25 @@ struct BookEditorView: View {
                     TextEditor(text: $book.notes)
                         .frame(minHeight: 100)
                 }
-                
-                Section {
+            }
+            .navigationTitle(editorTitle)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.red)
+                }
+                ToolbarItem(placement: .confirmationAction) {
                     Button(buttonName) {
                         saveBook()
                     }
+                    .buttonStyle(.borderedProminent)
+                    .tint(title.isEmpty ? .gray : .green)
                     .disabled(title.isEmpty)
                 }
             }
-            .navigationTitle(editorTitle)
-            .navigationBarItems(trailing:
-                                    Button("Cancel") {
-                dismiss()
-            }
-            )
             .sheet(isPresented: $showingNewAuthorSheet) {
                 newAuthorSheet
             }
