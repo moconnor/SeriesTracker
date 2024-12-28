@@ -6,16 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct BookListView: View {
-    var bookSeries: Series
+     var series: Series
     @State var addingNewBook: Bool = false
     @Environment(\.modelContext) private var modelContext
-   // @Query(sort: \Series.name) var series: [Series]
     
     var body: some View {
         VStack {
-            if bookSeries.books.isEmpty {
+            if series.books.isEmpty {
                 ContentUnavailableView {
                     Label("No Books in this Series", systemImage: "book.closed")
                 } actions: {
@@ -29,9 +29,9 @@ struct BookListView: View {
                 }
             } else {
                 List {
-                    Section(header: Text("Books In The Series")) {
-                        ForEach(bookSeries.books) { book in
-                            NavigationLink(destination: BookDetailsView(book: book, series: bookSeries)) {
+                    Section(header: Text("There Are \(series.books.count) Books In The Series")) {
+                        ForEach(series.books) { book in
+                            NavigationLink(destination: BookDetailsView(book: book, series: series)) {
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text(book.title)
@@ -56,19 +56,19 @@ struct BookListView: View {
             //        .onDelete(perform: deleteBooks)
         }
         .sheet(isPresented: $addingNewBook) {
-            BookEditorView(book: nil, series: bookSeries)
+            BookEditorView(book: nil, series: series)
         }
     }
 }
 
 #Preview("No Books") {
     let series: Series = .randomSeries(withBooks: false)
-    BookListView(bookSeries: series)
+    BookListView(series: series)
 }
 
 #Preview("Books") {
     let series: Series = .randomSeries()
     NavigationStack {
-        BookListView(bookSeries: series)
+        BookListView(series: series)
     }
 }

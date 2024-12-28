@@ -163,10 +163,9 @@ struct BookEditorView: View {
             book.title = title
             book.series = series
             book.author = selectedAuthor
-            if isNewBook {
-                modelContext.insert(book)
-            }
-            try modelContext.save()
+            book.series = series
+            series.books.append(book)
+            try modelContext.save() // redundant?
             dismiss()
         } catch {
             print("Error saving book: \(error)")
@@ -186,5 +185,4 @@ struct BookEditorView: View {
     let authorDB = Series.sampleDB()
     BookEditorView(book: series.books.first, series: series)
         .modelContainer(authorDB)
-    
 }

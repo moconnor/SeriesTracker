@@ -38,7 +38,7 @@ struct SeriesDetailView: View {
                     }
                 Divider()
                 
-                BookListView(bookSeries: series)
+                BookListView(series: series)
                 
                 Divider()
             }
@@ -71,10 +71,3 @@ struct SeriesDetailView: View {
     let series = Series.randomSeries()
     SeriesDetailView(series: series)
 }
-/*
- On my phone I added a third book to safehold series but when I return to series details it
- is not listed. But if I go back to series list and then to series details it is listed. so the
- details display is not fetching all books. And the series list view only shows 2 books in the
- series.
- 
- */
