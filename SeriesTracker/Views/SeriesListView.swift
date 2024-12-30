@@ -15,15 +15,20 @@ struct SeriesListView: View {
     @State private var newSeriesName = ""
     @State private var createNewSeries = false
     
+    var sortedSeries: [Series] {
+            // Sort the array by date, oldest first
+        series.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
-                if series.isEmpty {
+                if sortedSeries.isEmpty {
                     ContentUnavailableView("Enter a book series.", systemImage: "book.fill")
                 } else {
                     List {
                         Section(header: Text("My Book Series")) {
-                            ForEach(series) { bookSeries in
+                            ForEach(sortedSeries) { bookSeries in
                                 NavigationLink(destination: SeriesDetailView(series: bookSeries)) {
                                     SeriesRowView(series: bookSeries)
                                     }
