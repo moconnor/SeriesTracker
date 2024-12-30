@@ -35,6 +35,17 @@ class Series {
         return status
     }
     
+    func lastReadBook() -> Date? {
+
+        if let oldestObject = books.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
+            print("The oldest object is \(oldestObject.title) with date \(oldestObject.endDate)")
+            return oldestObject.endDate
+        } else {
+            print("The array is empty")
+            return nil
+        }
+    }
+    
 }
   
 

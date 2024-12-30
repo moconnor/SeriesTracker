@@ -35,9 +35,14 @@ struct BookListView: View {
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text(book.title)
-                                        Text(book.readStatus.rawValue.capitalized)
-                                            .font(.caption)
-                                            .foregroundColor(.secondary)
+                                        HStack {
+                                            Text(book.readStatus.rawValue.capitalized)
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
+//                                            Text(book.endDate) // TODO:  Why can't the compiler resolve the endDate.
+//                                                .font(.caption)
+//                                                .foregroundColor(.secondary)
+                                        }
                                     }
                                     Spacer()
                                     Image(systemName: book.readStatus.statusIcon())
