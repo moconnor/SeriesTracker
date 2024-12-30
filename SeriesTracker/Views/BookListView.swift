@@ -40,9 +40,11 @@ struct BookListView: View {
                                                 .font(.caption)
                                                 .foregroundColor(.secondary)
                                             
-                                            Text("\(book.endDate)")
-                                                .font(.caption)
-                                                .foregroundColor(.secondary)
+                                            if let endDate = book.endDate {
+                                                Text(endDate, style: .date)
+                                                    .font(.caption)
+                                                    .foregroundColor(.secondary)
+                                            }
                                         }
                                     }
                                     Spacer()
