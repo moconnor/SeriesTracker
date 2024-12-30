@@ -52,6 +52,12 @@ extension Book {
     static func randomBook() -> Book {
         let book = Book(title: Book.randomBookTitle(), author: Author.randomAuthor())
         book.readStatus = randomStatus()
+        if book.readStatus != .notStarted {
+            book.startDate = Date()
+            if book.readStatus != .inProgress {
+                book.endDate = Date()
+            }
+        }
         book.rating = Int.random(in: 1..<5)
         return book
     }

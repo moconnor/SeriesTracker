@@ -51,6 +51,8 @@ struct BookListView: View {
                                 }
                             }
                         }
+                        .onDelete(perform: deleteBooks)
+
                         Button {
                             addingNewBook = true
                         } label: {
@@ -59,10 +61,17 @@ struct BookListView: View {
                     }
                 }
             }
-            //        .onDelete(perform: deleteBooks)
         }
         .sheet(isPresented: $addingNewBook) {
             BookEditorView(book: nil, series: series)
+        }
+    }
+
+    func deleteBooks(at offsets: IndexSet) {
+        for offset in offsets {
+            let book = series.books[offset]
+            // need to delete it from series array!?
+            modelContext.delete(book)
         }
     }
 }
