@@ -65,8 +65,6 @@ extension Book {
     static func randomBook(author: Author) -> Book {
         let book = Book.randomBook()
         book.author = author
-        book.readStatus = randomStatus()
-        book.rating = Int.random(in: 1..<5)
         return book
     }
     

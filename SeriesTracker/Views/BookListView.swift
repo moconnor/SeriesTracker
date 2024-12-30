@@ -69,11 +69,18 @@ struct BookListView: View {
         }
     }
 
+    // potential problem with deleting multiple books
+    // since the array could get misaligned?
     func deleteBooks(at offsets: IndexSet) {
         for offset in offsets {
             let book = series.books[offset]
-            // need to delete it from series array!?
             modelContext.delete(book)
+            series.books.remove(at: offset)
+        }
+        do {
+            try modelContext.save()
+        } catch {
+            print("Error deleting books: \(error)")
         }
     }
 }
