@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct BookListView: View {
-     var series: Series
+    var series: Series
     @State var addingNewBook: Bool = false
     @Environment(\.modelContext) private var modelContext
     
@@ -39,9 +39,10 @@ struct BookListView: View {
                                             Text(book.readStatus.rawValue.capitalized)
                                                 .font(.caption)
                                                 .foregroundColor(.secondary)
-//                                            Text(book.endDate) // TODO:  Why can't the compiler resolve the endDate.
-//                                                .font(.caption)
-//                                                .foregroundColor(.secondary)
+                                            
+                                            Text("\(book.endDate)")
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
                                         }
                                     }
                                     Spacer()
