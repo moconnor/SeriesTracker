@@ -81,7 +81,7 @@ struct BookDetailsView: View {
 }
 
 #Preview {
-    NavigationView {
+    NavigationStack {
         let series = Series.randomSeries()
         BookDetailsView(book: series.books.randomElement()!, series: series)
     }

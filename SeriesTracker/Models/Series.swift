@@ -12,7 +12,7 @@ import SwiftData
 class Series {
     var id: UUID
     var name: String
-    var books: [Book]
+    @Relationship(deleteRule: .cascade) var books: [Book]
     var status: ReadStatus = ReadStatus.notStarted
     var author: Author
     
@@ -38,7 +38,7 @@ class Series {
     func lastReadBook() -> Date? {
 
         if let oldestObject = books.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
-            print("The oldest object is \(oldestObject.title) with date \(oldestObject.endDate)")
+            print("The oldest object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
             return oldestObject.endDate
         } else {
             print("The array is empty")

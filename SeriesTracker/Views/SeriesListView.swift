@@ -59,6 +59,11 @@ struct SeriesListView: View {
         for index in offsets {
             let seriesItem = series[index]
             modelContext.delete(seriesItem)
+            do {
+                try modelContext.save()
+            } catch {
+                print("Error deleting books: \(error)")
+            }
         }
     }
     
@@ -76,6 +81,5 @@ struct SeriesListView: View {
         let series = Series.randomSeries()
         preview.add(items: [series])
     }
-
     return SeriesListView().modelContainer(preview.container)
 }

@@ -34,7 +34,7 @@ struct SeriesEditorView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("Series Details")) {
                     TextField("Series Name", text: $series.name)
@@ -42,21 +42,28 @@ struct SeriesEditorView: View {
                     // Author picker with add new option
                     authorSelectionView
                 }
-                
-                Section {
+            }
+            .navigationTitle(editorTitle)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.red)
+                }
+                ToolbarItem(placement: .confirmationAction) {
                     Button(buttonName) {
                         saveOrUpdateSeries()
                     }
-                    .disabled(series.name.isEmpty)
+                    .buttonStyle(.borderedProminent)
+                    .tint(series.name.isEmpty ? .gray : .green)
+                    .disabled(series.name.isEmpty || series.author.name.isEmpty)
                 }
             }
-            .navigationTitle(editorTitle)
-            .navigationBarItems(trailing:
-                                    Button("Cancel") {
-                dismiss()
-            })
+            
             .sheet(isPresented: $showingNewAuthorSheet) {
-                NavigationView {
+                NavigationStack {
                     Form {
                         Section {
                             TextField("Author Name", text: $newAuthorName)
@@ -66,10 +73,13 @@ struct SeriesEditorView: View {
                     .navigationBarItems(
                         leading: Button("Cancel") {
                             showingNewAuthorSheet = false
-                        },
+                        }.buttonStyle(.borderedProminent)
+                            .tint(.red),
                         trailing: Button("Add") {
                             addNewAuthor()
                         }
+                            .buttonStyle(.borderedProminent)
+                            .tint(series.name.isEmpty ? .gray : .green)
                             .disabled(newAuthorName.isEmpty)
                     )
                 }

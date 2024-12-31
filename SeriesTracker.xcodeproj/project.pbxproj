@@ -10,9 +10,22 @@
 		03D3CB8C2D122FCC00627067 /* SeriesTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeriesTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		032421552D2441B40023B484 /* Exceptions for "SeriesTracker" folder in "SeriesTracker" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Views/SaveCancelToolBar.swift,
+			);
+			target = 03D3CB8B2D122FCC00627067 /* SeriesTracker */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		03D3CB8E2D122FCC00627067 /* SeriesTracker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				032421552D2441B40023B484 /* Exceptions for "SeriesTracker" folder in "SeriesTracker" target */,
+			);
 			path = SeriesTracker;
 			sourceTree = "<group>";
 		};

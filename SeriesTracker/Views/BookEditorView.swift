@@ -44,7 +44,7 @@ struct BookEditorView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("Basic Information")) {
                     TextField("Title", text: $title)
@@ -122,7 +122,7 @@ struct BookEditorView: View {
     }
     
     private var newAuthorSheet: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 TextField("Author Name", text: $newAuthorName)
             }
