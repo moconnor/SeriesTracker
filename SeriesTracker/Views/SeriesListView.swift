@@ -37,6 +37,17 @@ struct SeriesListView: View {
                         }
                     }
                 }
+                Button("Export") {
+                    do {
+                        let jsonData = try Series.exportToJSON(series: series)
+                        if let jsonString = String(data: jsonData, encoding: .utf8) {
+                           print(jsonString)
+                        }
+                    } catch {
+                        print("Error exporting series: \(error)")
+                    }
+                   // try! Series.exportToJSON(series: series).write(to: URL(fileURLWithPath: "library.json"))
+                }
             }
             .navigationTitle("Series Tracker")
             .toolbar {
