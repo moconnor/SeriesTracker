@@ -14,9 +14,10 @@ struct SeriesListView: View {
     
     @State private var newSeriesName = ""
     @State private var createNewSeries = false
+    @State private var showMenu = false
     
     var sortedSeries: [Series] {
-            // Sort the array by date, oldest first
+        // Sort the array by date, oldest first
         series.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
     }
     
@@ -31,32 +32,57 @@ struct SeriesListView: View {
                             ForEach(sortedSeries) { bookSeries in
                                 NavigationLink(destination: SeriesDetailView(series: bookSeries)) {
                                     SeriesRowView(series: bookSeries)
-                                    }
                                 }
+                            }
                             .onDelete(perform: deleteSeries)
                         }
                     }
                 }
-                Button("Export") {
-                    do {
-                        let jsonData = try Series.exportToJSON(series: series)
-                        if let jsonString = String(data: jsonData, encoding: .utf8) {
-                           print(jsonString)
-                        }
-                    } catch {
-                        print("Error exporting series: \(error)")
-                    }
-                   // try! Series.exportToJSON(series: series).write(to: URL(fileURLWithPath: "library.json"))
-                }
+                
             }
             .navigationTitle("Series Tracker")
             .toolbar {
+                
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         createNewSeries = true
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .imageScale(.large)
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Menu {
+                        Button {
+                            do {
+                                let jsonData = try Series.exportToJSON(series: series)
+                                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                                    print(jsonString)
+                                    if let tempURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                                            print("Exported series to \(tempURL)")
+                                    let pathURL = tempURL.appendingPathComponent("series.json")
+                                        try jsonData.write(to: pathURL)
+                                    }
+                                }
+                            } catch {
+                                print("Error exporting series: \(error)")
+                            }
+                            
+                        } label: {
+                            Text("Export Series")
+                        }
+                        
+                        Button {
+                            
+                        } label: {
+                            Text("Import Series")
+                        }
+                        
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
+                            .imageScale(.large)
+                            .foregroundColor(.primary)
                     }
                 }
             }
