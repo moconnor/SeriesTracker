@@ -18,46 +18,43 @@ struct SeriesDetailView: View {
     @State private var editSeries: Bool = false
     
     var body: some View {
-        NavigationStack {
-            VStack(alignment: .leading) {
-                
-                Text(series.name + " Details")
-                    .font(.title)
-                    .bold()
-                Text("Status: " + series.readStatus().rawValue)
-                    .font(.headline)
-                
-                Divider()
-                Section(header: Text("Author")
-                    .font(.headline)) {
-                        HStack {
-                            Text(series.author.name)
-                                .font(.headline)
-                        }
-                        .padding(.horizontal)
+        VStack(alignment: .leading) {
+            
+            Text(series.name + " Details")
+                .font(.title)
+                .bold()
+            Text("Status: " + series.readStatus().rawValue)
+                .font(.headline)
+            
+            Divider()
+            Section(header: Text("Author")
+                .font(.headline)) {
+                    HStack {
+                        Text(series.author.name)
+                            .font(.headline)
                     }
-                Divider()
-                
-                BookListView(series: series)
-                
-                Divider()
-            }
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        editSeries = true
-                    } label: {
-                        Image(systemName: "pencil")
-                            .imageScale(.large)
-                    }
+                    .padding(.horizontal)
+                }
+            Divider()
+            
+            BookListView(series: series)
+            
+            Divider()
+        }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    editSeries = true
+                } label: {
+                    Image(systemName: "pencil")
+                        .imageScale(.large)
                 }
             }
-            .padding()
-            .sheet(isPresented: $editSeries) {
-                SeriesEditorView(series: series)
-            }
         }
-        
+        .padding()
+        .sheet(isPresented: $editSeries) {
+            SeriesEditorView(series: series)
+        }
     }
 }
 

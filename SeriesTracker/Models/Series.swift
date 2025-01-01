@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Series: Codable {
+class Series: Codable, Hashable, Identifiable {
     var id: UUID
     var name: String
     @Relationship(deleteRule: .cascade) var books: [Book]
@@ -60,10 +60,10 @@ class Series: Codable {
     func lastReadBook() -> Date? {
 
         if let oldestObject = books.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
-            print("The oldest object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
+          //  print("The oldest object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
             return oldestObject.endDate
         } else {
-            print("The array is empty")
+          //  print("The array is empty")
             return nil
         }
     }
@@ -75,10 +75,5 @@ class Series: Codable {
         return try encoder.encode(series)
     }
 }
-  /*
 
-   // MARK: - Usage
-   let jsonData = try exportToJSON(series: allSeries)
-   try jsonData.write(to: URL(fileURLWithPath: "library.json"))
-   */
 

@@ -31,30 +31,12 @@ struct BookListView: View {
                 List {
                     Section(header: Text("There Are \(series.books.count) Books In The Series")) {
                         ForEach(series.books) { book in
-                            NavigationLink(destination: BookDetailsView(book: book, series: series)) {
-                                HStack {
-                                    VStack(alignment: .leading) {
-                                        Text(book.title)
-                                        HStack {
-                                            Text(book.readStatus.rawValue.capitalized)
-                                                .font(.caption)
-                                                .foregroundColor(.secondary)
-                                            
-                                            if let endDate = book.endDate {
-                                                Text(endDate, style: .date)
-                                                    .font(.caption)
-                                                    .foregroundColor(.secondary)
-                                            }
-                                        }
-                                    }
-                                    Spacer()
-                                    Image(systemName: book.readStatus.statusIcon())
-                                        .foregroundColor(book.readStatus.statusColor())
-                                }
+                            NavigationLink(value: book) {
+                                BooksRowView(book: book)
                             }
                         }
                         .onDelete(perform: deleteBooks)
-
+                        
                         Button {
                             addingNewBook = true
                         } label: {
@@ -62,13 +44,16 @@ struct BookListView: View {
                         }
                     }
                 }
+                .navigationDestination(for: Book.self)  { book in
+                    BookDetailsView(book: book, series: series)
+                }
             }
         }
         .sheet(isPresented: $addingNewBook) {
             BookEditorView(book: nil, series: series)
         }
     }
-
+    
     // potential problem with deleting multiple books
     // since the array could get misaligned?
     func deleteBooks(at offsets: IndexSet) {

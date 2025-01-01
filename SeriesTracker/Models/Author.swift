@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Author: Codable {
+class Author: Codable, Hashable {
     var id: UUID
     var name: String
     var books: [Book]
