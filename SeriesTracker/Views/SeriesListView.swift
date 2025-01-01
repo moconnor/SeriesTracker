@@ -53,23 +53,12 @@ struct SeriesListView: View {
                             .imageScale(.large)
                     }
                 }
-                // Move the following into another file?
+
                 ToolbarItem(placement: .navigationBarLeading) {
                     Menu {
                         Button {
-                            do {
-                                let jsonData = try Series.exportToJSON(series: series)
-                                if let jsonString = String(data: jsonData, encoding: .utf8) {
-                                    print(jsonString)
-                                    if let tempURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                                        print("Exported series to \(tempURL)")
-                                        let pathURL = tempURL.appendingPathComponent("series.json")
-                                        try jsonData.write(to: pathURL)
-                                    }
-                                }
-                            } catch {
-                                print("Error exporting series: \(error)")
-                            }
+                            // no feedback to user that it succeeded
+                            Series.exportSeries(series: series)
                         } label: {
                             Text("Export Series")
                         }

@@ -74,6 +74,25 @@ class Series: Codable, Hashable, Identifiable {
         encoder.outputFormatting = .prettyPrinted
         return try encoder.encode(series)
     }
+    
+    static func exportSeries(series: [Series]) {
+        do {
+            let jsonData = try Series.exportToJSON(series: series)
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                print(jsonString)
+                if let tempURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                    print("Exported series to \(tempURL)")
+                    let df = DateFormatter()
+                    df.dateFormat = "yyyyMMddHHmm"
+                    let fileName = "series_\(df.string(from: Date())).json"
+                    let pathURL = tempURL.appendingPathComponent(fileName)
+                    try jsonData.write(to: pathURL, options: .atomic)
+                }
+            }
+        } catch {
+            print("Error exporting series: \(error)")
+        }
+    }
 }
 
 
