@@ -22,11 +22,12 @@ struct SeriesListView: View {
     }
     
     var body: some View {
-        VStack {
-            if sortedSeries.isEmpty {
-                ContentUnavailableView("Enter a book series.", systemImage: "book.fill")
-            } else {
-                NavigationStack {
+        NavigationStack {
+            VStack {
+                if sortedSeries.isEmpty {
+                    ContentUnavailableView("Enter a book series.", systemImage: "book.fill")
+                } else {
+                    // NavigationStack {
                     List {
                         Section(header: Text("My Book Series")) {
                             ForEach(sortedSeries) { bookSeries in
@@ -42,57 +43,52 @@ struct SeriesListView: View {
                     }
                 }
             }
-        }
-        .navigationTitle("Series Tracker")
-        .toolbar {
-            
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    createNewSeries = true
-                } label: {
-                    Image(systemName: "plus.circle.fill")
-                        .imageScale(.large)
-                }
-            }
-            
-            ToolbarItem(placement: .navigationBarLeading) {
-                Menu {
+            .navigationTitle("Series Tracker")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
                     Button {
-                        do {
-                            let jsonData = try Series.exportToJSON(series: series)
-                            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                                print(jsonString)
-                                if let tempURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                                    print("Exported series to \(tempURL)")
-                                    let pathURL = tempURL.appendingPathComponent("series.json")
-                                    try jsonData.write(to: pathURL)
+                        createNewSeries = true
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .imageScale(.large)
+                    }
+                }
+                // Move the following into another file?
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Menu {
+                        Button {
+                            do {
+                                let jsonData = try Series.exportToJSON(series: series)
+                                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                                    print(jsonString)
+                                    if let tempURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                                        print("Exported series to \(tempURL)")
+                                        let pathURL = tempURL.appendingPathComponent("series.json")
+                                        try jsonData.write(to: pathURL)
+                                    }
                                 }
+                            } catch {
+                                print("Error exporting series: \(error)")
                             }
-                        } catch {
-                            print("Error exporting series: \(error)")
+                        } label: {
+                            Text("Export Series")
                         }
-                        
+                        Button {
+                            
+                        } label: {
+                            Text("Import Series")
+                        }
                     } label: {
-                        Text("Export Series")
+                        Image(systemName: "ellipsis.circle")
+                            .imageScale(.large)
+                            .foregroundColor(.primary)
                     }
-                    
-                    Button {
-                        
-                    } label: {
-                        Text("Import Series")
-                    }
-                    
-                } label: {
-                    Image(systemName: "ellipsis.circle")
-                        .imageScale(.large)
-                        .foregroundColor(.primary)
                 }
             }
+            .sheet(isPresented: $createNewSeries) {
+                SeriesEditorView()
+            }
         }
-        .sheet(isPresented: $createNewSeries) {
-            SeriesEditorView()
-        }
-        
     }
     
     private func deleteSeries(at offsets: IndexSet) {
