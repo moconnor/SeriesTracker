@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftData
+import UniformTypeIdentifiers
+import SwiftUI
 
 @Model
 class Series: Codable, Hashable, Identifiable {
@@ -75,24 +77,34 @@ class Series: Codable, Hashable, Identifiable {
         return try encoder.encode(series)
     }
     
-    static func exportSeries(series: [Series]) {
+    static func seriesJSON(series: [Series]) -> Data {
+        var jsonData: Data = Data()
         do {
-            let jsonData = try Series.exportToJSON(series: series)
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print(jsonString)
-                if let tempURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                    print("Exported series to \(tempURL)")
-                    let df = DateFormatter()
-                    df.dateFormat = "yyyyMMddHHmm"
-                    let fileName = "series_\(df.string(from: Date())).json"
-                    let pathURL = tempURL.appendingPathComponent(fileName)
-                    try jsonData.write(to: pathURL, options: .atomic)
-                }
-            }
+            jsonData = try Series.exportToJSON(series: series)
         } catch {
             print("Error exporting series: \(error)")
         }
+        return jsonData
     }
 }
 
+struct JSONFile: FileDocument {
+    static var readableContentTypes: [UTType] { [.json] }
+    
+    let series: [Series]
+    
+    init(series: [Series]) {
+        self.series = series
+    }
+    
+    init(configuration: ReadConfiguration) throws {
+        // This won't be used for export-only functionality
+        self.series = []
+    }
+    
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        let data = try Series.exportToJSON(series: series)
+        return FileWrapper(regularFileWithContents: data)
+    }
+}
 
