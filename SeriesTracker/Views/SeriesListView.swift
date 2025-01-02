@@ -13,7 +13,7 @@ struct SeriesListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Series.name) var series: [Series]
     var formatter = DateFormatter()
-
+    
     init() {
         formatter.dateFormat = "yyyyMMddHHmm"
     }
@@ -23,6 +23,9 @@ struct SeriesListView: View {
     @State private var showMenu = false
     @State private var isExporting = false
     @State private var isImporting = false
+    @State private var showConfirmation = false
+    //@State private var indexSetToDelete: IndexSet?
+    @State private var seriesToDelete: Series?
     
     var sortedSeries: [Series] {
         // Sort the array by date, oldest first
@@ -40,14 +43,34 @@ struct SeriesListView: View {
                             ForEach(sortedSeries) { bookSeries in
                                 NavigationLink(value: bookSeries) {
                                     SeriesRowView(series: bookSeries)
+                                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                            Button(role: .destructive) {
+                                                seriesToDelete = bookSeries
+                                                showConfirmation = true
+                                            } label: {
+                                                Label("Delete", systemImage: "trash")
+                                            }
+                                        }
                                 }
                             }
-                            .onDelete(perform: deleteSeries)
                         }
                     }
+                    .confirmationDialog(
+                        "Delete \(seriesToDelete?.name ?? "Series")?",
+                        isPresented: $showConfirmation,
+                        titleVisibility: .visible
+                    ) {
+                        Button("Delete", role: .destructive) {
+                            deleteASeries()
+                        }
+                    } message: {
+                        Text("Are you sure you want to delete this series and all of its books? This action cannot be undone.")
+                    }
+                    
                     .navigationDestination(for: Series.self)  { series in
                         SeriesDetailView(series: series)
                     }
+                    
                 }
             }
             .navigationTitle("Series Tracker")
@@ -88,7 +111,7 @@ struct SeriesListView: View {
                         case .failure(let error):
                             print("Error saving JSON file: \(error.localizedDescription)")
                         }
-                    }   
+                    }
                 }
             }
             .sheet(isPresented: $createNewSeries) {
@@ -97,16 +120,17 @@ struct SeriesListView: View {
         }
     }
     
-    private func deleteSeries(at offsets: IndexSet) {
-        for index in offsets {
-            let seriesItem = series[index]
-            modelContext.delete(seriesItem)
-            do {
-                try modelContext.save()
-            } catch {
-                print("Error deleting books: \(error)")
-            }
+    private func deleteASeries() {
+        guard let series = seriesToDelete else { return }
+        
+        modelContext.delete(series)
+        
+        do {
+            try modelContext.save()
+        } catch {
+            print("Error deleting series: \(error)")
         }
+        seriesToDelete = nil
     }
     
 }
