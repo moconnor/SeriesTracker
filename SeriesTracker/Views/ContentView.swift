@@ -21,5 +21,10 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    let preview = Preview([Series.self])
+    for _ in 0..<Int.random(in: 1..<15) {
+        let series = Series.randomSeries()
+        preview.add(items: [series])
+    }
+    return ContentView().modelContainer(preview.container)
 }
