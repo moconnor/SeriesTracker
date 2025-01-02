@@ -24,8 +24,9 @@ struct SeriesListView: View {
     @State private var isExporting = false
     @State private var isImporting = false
     @State private var showConfirmation = false
-    //@State private var indexSetToDelete: IndexSet?
     @State private var seriesToDelete: Series?
+    @State private var importError: Error?
+    @State private var showError = false
     
     var sortedSeries: [Series] {
         // Sort the array by date, oldest first
@@ -56,7 +57,7 @@ struct SeriesListView: View {
                         }
                     }
                     .confirmationDialog(
-                        "Delete \(seriesToDelete?.name ?? "Series")?",
+                        "Delete \"\(seriesToDelete?.name ?? "Series")\"?",
                         isPresented: $showConfirmation,
                         titleVisibility: .visible
                     ) {
@@ -99,8 +100,33 @@ struct SeriesListView: View {
                             .foregroundColor(.primary)
                     }
                     .fileImporter(isPresented: $isImporting, allowedContentTypes: [.json]) { result in
-                        print(result)
+                        switch result {
+                        case .success:
+                            do {
+                                let url = try result.get()
+                                
+                                let data = try Data(contentsOf: url)
+                                let decoder = JSONDecoder()
+                                let newSeries = try decoder.decode([Series].self, from: data)
+                                try modelContext.delete(model: Series.self)
+                                for series in newSeries {
+                                    modelContext.insert(series)
+                                }
+
+                            } catch {
+                                importError = error
+                                showError = true
+                            }
+                        case .failure(let error):
+                            print("Error reading JSON file: \(error.localizedDescription)")
+                        }
                     }
+                    .alert("Import Error", isPresented: $showError, presenting: importError) { _ in
+                        Button("OK", role: .cancel) {}
+                    } message: { error in
+                        Text(error.localizedDescription)
+                    }
+                    
                     .fileExporter(isPresented: $isExporting,
                                   document: JSONFile(series: series),
                                   contentType: .json,
@@ -112,6 +138,7 @@ struct SeriesListView: View {
                             print("Error saving JSON file: \(error.localizedDescription)")
                         }
                     }
+
                 }
             }
             .sheet(isPresented: $createNewSeries) {

@@ -86,25 +86,25 @@ class Series: Codable, Hashable, Identifiable {
         }
         return jsonData
     }
+    
 }
 
 struct JSONFile: FileDocument {
     static var readableContentTypes: [UTType] { [.json] }
-    
-    let series: [Series]
-    
+    var series: [Series] = []
     init(series: [Series]) {
         self.series = series
     }
     
     init(configuration: ReadConfiguration) throws {
-        // This won't be used for export-only functionality
-        self.series = []
+        print("read config")
+        // not used for reading
     }
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         let data = try Series.exportToJSON(series: series)
         return FileWrapper(regularFileWithContents: data)
     }
+
 }
 
