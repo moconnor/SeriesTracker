@@ -11,6 +11,9 @@ import SwiftData
 struct BookListView: View {
     var series: Series
     @State var addingNewBook: Bool = false
+    @State var bookToDelete: Book?
+    @State var showConfirmation: Bool = false
+    
     @Environment(\.modelContext) private var modelContext
     
     var body: some View {
@@ -33,9 +36,16 @@ struct BookListView: View {
                         ForEach(series.books) { book in
                             NavigationLink(value: book) {
                                 BooksRowView(book: book)
+                                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                        Button(role: .destructive) {
+                                            bookToDelete = book
+                                            showConfirmation = true
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                    }
                             }
                         }
-                        .onDelete(perform: deleteBooks)
                         
                         Button {
                             addingNewBook = true
@@ -43,6 +53,17 @@ struct BookListView: View {
                             Image(systemName: "plus")
                         }
                     }
+                }
+                .confirmationDialog(
+                    "Delete \"\(bookToDelete?.title ?? "this book")\"?",
+                    isPresented: $showConfirmation,
+                    titleVisibility: .visible
+                ) {
+                    Button("Delete", role: .destructive) {
+                        deleteABook()
+                    }
+                } message: {
+                    Text("Are you sure you want to delete this book? This action cannot be undone.")
                 }
                 .navigationDestination(for: Book.self)  { book in
                     BookDetailsView(book: book, series: series)
@@ -54,20 +75,17 @@ struct BookListView: View {
         }
     }
     
-    // potential problem with deleting multiple books
-    // since the array could get misaligned?
-    func deleteBooks(at offsets: IndexSet) {
-        for offset in offsets {
-            let book = series.books[offset]
-            modelContext.delete(book)
-            series.books.remove(at: offset)
-        }
+    private func deleteABook() {
+        guard let book = bookToDelete else { return }
+        modelContext.delete(book)
         do {
             try modelContext.save()
         } catch {
-            print("Error deleting books: \(error)")
+            print("Error deleting book: \(error)")
         }
+        bookToDelete = nil
     }
+
 }
 
 #Preview("No Books") {
