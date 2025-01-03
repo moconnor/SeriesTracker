@@ -37,7 +37,7 @@ class Book: Identifiable, Codable, Hashable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, title, seriesOrder, readStatus, startDate, endDate, rating, notes
+        case id, title, seriesOrder, readStatus, startDate, endDate, rating, notes, author
     }
     
     required init(from decoder: Decoder) throws {
@@ -50,6 +50,7 @@ class Book: Identifiable, Codable, Hashable {
         endDate = try container.decodeIfPresent(Date.self, forKey: .endDate)
         rating = try container.decodeIfPresent(Int.self, forKey: .rating)
         notes = try container.decode(String.self, forKey: .notes)
+        author = try container.decodeIfPresent(Author.self, forKey: .author)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -62,5 +63,6 @@ class Book: Identifiable, Codable, Hashable {
         try container.encodeIfPresent(endDate, forKey: .endDate)
         try container.encodeIfPresent(rating, forKey: .rating)
         try container.encode(notes, forKey: .notes)
+        try container.encodeIfPresent(author, forKey: .author)
     }
 }
