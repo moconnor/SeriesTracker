@@ -104,19 +104,24 @@ struct SeriesListView: View {
                         case .success:
                             do {
                                 let url = try result.get()
+                                
                                 if url.startAccessingSecurityScopedResource() {
                                     let data = try Data(contentsOf: url)
                                     let decoder = JSONDecoder()
                                     let newSeries = try decoder.decode([Series].self, from: data)
                                     url.stopAccessingSecurityScopedResource()
-                                    
+
+                                    // this appears to clear the database without errors
                                     try modelContext.delete(model: Series.self)
                                     try modelContext.delete(model: Book.self)
                                     try modelContext.delete(model: Author.self)
-                                    
+
+                                    // this inserts an author record the series and the books
                                     for series in newSeries {
                                         modelContext.insert(series)
                                     }
+                                    try modelContext.save()
+
                                 }
 
                             } catch {
