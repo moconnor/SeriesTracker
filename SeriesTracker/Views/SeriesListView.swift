@@ -104,13 +104,19 @@ struct SeriesListView: View {
                         case .success:
                             do {
                                 let url = try result.get()
-                                
-                                let data = try Data(contentsOf: url)
-                                let decoder = JSONDecoder()
-                                let newSeries = try decoder.decode([Series].self, from: data)
-                                try modelContext.delete(model: Series.self)
-                                for series in newSeries {
-                                    modelContext.insert(series)
+                                if url.startAccessingSecurityScopedResource() {
+                                    let data = try Data(contentsOf: url)
+                                    let decoder = JSONDecoder()
+                                    let newSeries = try decoder.decode([Series].self, from: data)
+                                    url.stopAccessingSecurityScopedResource()
+                                    
+                                    try modelContext.delete(model: Series.self)
+                                    try modelContext.delete(model: Book.self)
+                                    try modelContext.delete(model: Author.self)
+                                    
+                                    for series in newSeries {
+                                        modelContext.insert(series)
+                                    }
                                 }
 
                             } catch {
