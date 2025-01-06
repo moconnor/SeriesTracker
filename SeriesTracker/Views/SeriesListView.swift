@@ -108,6 +108,7 @@ struct SeriesListView: View {
                                 if url.startAccessingSecurityScopedResource() {
                                     let data = try Data(contentsOf: url)
                                     let decoder = JSONDecoder()
+                                    decoder.dateDecodingStrategy = .iso8601
                                     let newSeries = try decoder.decode([Series].self, from: data)
                                     url.stopAccessingSecurityScopedResource()
 
