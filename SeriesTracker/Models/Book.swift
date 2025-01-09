@@ -20,6 +20,7 @@ class Book: Identifiable, Codable, Hashable {
     var notes: String
     var series: Series?
     var author: Author?
+    @Attribute(.externalStorage) var bookCover: Data?
     
     init(title: String,
          seriesOrder: Int = 1,

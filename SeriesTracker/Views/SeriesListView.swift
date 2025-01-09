@@ -25,9 +25,10 @@ struct SeriesListView: View {
     @State private var isImporting = false
     @State private var showConfirmation = false
     @State private var seriesToDelete: Series?
-    @State private var showError = false
-    @State private var errorMessage: String = ""
-
+    @State private var showAlert = false
+    @State private var alertTitle: String = "Error"
+    @State private var alertMessage: String = ""
+    
     var sortedSeries: [Series] {
         // Sort the array by date, oldest first
         series.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
@@ -125,47 +126,51 @@ struct SeriesListView: View {
                                 }
                                 
                             } catch let error {
-                                    switch error {
-                                    case DecodingError.keyNotFound(let key, let context):
-                                        errorMessage = "Could not find key \(key) in JSON: \(context.debugDescription)"
-                                        
-                                    case DecodingError.valueNotFound(let type, let context):
-                                        errorMessage = "Could not find type \(type) in JSON: \(context.debugDescription)"
-                                        
-                                    case DecodingError.typeMismatch(let type, let context):
-                                        errorMessage = "Type mismatch for type \(type) in JSON: \(context.debugDescription)"
-                                        
-                                    case DecodingError.dataCorrupted(let context):
-                                        errorMessage = "Data found to be corrupted in JSON: \(context.debugDescription)"
-                                        
-                                    case let error as NSError:
-                                        errorMessage = "Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)"
-                                    }
-                                    showError = true
+                                switch error {
+                                case DecodingError.keyNotFound(let key, let context):
+                                    alertMessage = "Could not find key \(key) in JSON: \(context.debugDescription)"
+                                    
+                                case DecodingError.valueNotFound(let type, let context):
+                                    alertMessage = "Could not find type \(type) in JSON: \(context.debugDescription)"
+                                    
+                                case DecodingError.typeMismatch(let type, let context):
+                                    alertMessage = "Type mismatch for type \(type) in JSON: \(context.debugDescription)"
+                                    
+                                case DecodingError.dataCorrupted(let context):
+                                    alertMessage = "Data found to be corrupted in JSON: \(context.debugDescription)"
+                                    
+                                case let error as NSError:
+                                    alertMessage = "Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)"
                                 }
-                             case .failure(let error):
-                                errorMessage = "Error reading JSON file: \(error.localizedDescription)"
-                                showError = true
+                                showAlert = true
                             }
+                        case .failure(let error):
+                            alertMessage = "Error reading JSON file: \(error.localizedDescription)"
+                            showAlert = true
                         }
-                        .alert("Error", isPresented: $showError) {
-                            Button("OK", role: .cancel) { }
-                        } message: {
-                            Text(errorMessage)
-                        }
+                    }
+                    
+                    .alert(alertTitle, isPresented: $showAlert) {
+                        Button("OK", role: .cancel) { }
+                    } message: {
+                        Text(alertMessage)
+                    }
                     
                     .fileExporter(isPresented: $isExporting,
                                   document: JSONFile(series: series),
                                   contentType: .json,
                                   defaultFilename: "Series-\(formatter.string(from: Date())).json") { result in
+                        showAlert = true
+                        
                         switch result {
                         case .success(let url):
-                            print("JSON file saved successfully at: \(url.path)")
+                            alertTitle = "Success"
+                            alertMessage = "JSON file saved successfully at: \(url.path)"
                         case .failure(let error):
-                            print("Error saving JSON file: \(error.localizedDescription)")
+                            alertMessage = "Error saving JSON file: \(error.localizedDescription)"
                         }
                     }
-
+                    
                 }
             }
             .sheet(isPresented: $createNewSeries) {
