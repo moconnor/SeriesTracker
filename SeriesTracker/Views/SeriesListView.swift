@@ -40,7 +40,7 @@ struct SeriesListView: View {
                     ContentUnavailableView("Enter a book series.", systemImage: "book.fill")
                 } else {
                     List {
-                        Section(header: Text("My Book Series")) {
+                        Section(header: Text("My Book Series (\(sortedSeries.count))")) {
                             ForEach(sortedSeries) { bookSeries in
                                 NavigationLink(value: bookSeries) {
                                     SeriesRowView(series: bookSeries)

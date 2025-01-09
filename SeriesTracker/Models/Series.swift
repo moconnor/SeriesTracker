@@ -70,6 +70,16 @@ class Series: Codable, Hashable, Identifiable {
         }
     }
     
+    func lastReadBookName() -> String? {
+
+        if let oldestObject = books.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
+          //  print("The oldest object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
+            return oldestObject.title
+        } else {
+          //  print("The array is empty")
+            return nil
+        }
+    }
     static func exportToJSON(series: [Series]) throws -> Data {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
