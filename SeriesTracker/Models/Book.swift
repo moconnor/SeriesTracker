@@ -42,15 +42,15 @@ class Book: Identifiable, Codable, Hashable {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(UUID.self, forKey: .id)
-        title = try container.decode(String.self, forKey: .title)
-        seriesOrder = try container.decode(Int.self, forKey: .seriesOrder)
-        readStatus = try container.decode(ReadStatus.self, forKey: .readStatus)
-        startDate = try container.decodeIfPresent(Date.self, forKey: .startDate)
-        endDate = try container.decodeIfPresent(Date.self, forKey: .endDate)
-        rating = try container.decodeIfPresent(Int.self, forKey: .rating)
-        notes = try container.decode(String.self, forKey: .notes)
-        author = try container.decodeIfPresent(Author.self, forKey: .author)
+        id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID() // Default: new UUID
+        title = try container.decodeIfPresent(String.self, forKey: .title) ?? "Untitled" // Default: "Untitled"
+        seriesOrder = try container.decodeIfPresent(Int.self, forKey: .seriesOrder) ?? 0 // Default: 0
+        readStatus = try container.decodeIfPresent(ReadStatus.self, forKey: .readStatus) ?? .notStarted // Default: .unread
+        startDate = try container.decodeIfPresent(Date.self, forKey: .startDate) // Default: nil
+        endDate = try container.decodeIfPresent(Date.self, forKey: .endDate) // Default: nil
+        rating = try container.decodeIfPresent(Int.self, forKey: .rating) ?? 0 // Default: 0
+        notes = try container.decodeIfPresent(String.self, forKey: .notes) ?? "" // Default: empty string
+        author = try container.decodeIfPresent(Author.self, forKey: .author) // Default: nil
     }
     
     func encode(to encoder: Encoder) throws {

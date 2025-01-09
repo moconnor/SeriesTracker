@@ -31,11 +31,11 @@ class Series: Codable, Hashable, Identifiable {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(UUID.self, forKey: .id)
-        name = try container.decode(String.self, forKey: .name)
-        books = try container.decode([Book].self, forKey: .books)
-        status = try container.decode(ReadStatus.self, forKey: .status)
-        author = try container.decode(Author.self, forKey: .author)
+        id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID() // Default: new UUID
+        name = try container.decodeIfPresent(String.self, forKey: .name) ?? "Untitled"
+        books = try container.decodeIfPresent([Book].self, forKey: .books) ?? []
+        status = try container.decodeIfPresent(ReadStatus.self, forKey: .status) ?? .notStarted
+        author = try container.decodeIfPresent(Author.self, forKey: .author) ?? Author(name: "Unknown")
     }
     
     func encode(to encoder: Encoder) throws {
@@ -70,6 +70,16 @@ class Series: Codable, Hashable, Identifiable {
         }
     }
     
+    func lastReadBookName() -> String? {
+
+        if let oldestObject = books.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
+          //  print("The oldest object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
+            return oldestObject.title
+        } else {
+          //  print("The array is empty")
+            return nil
+        }
+    }
     static func exportToJSON(series: [Series]) throws -> Data {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601

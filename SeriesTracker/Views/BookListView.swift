@@ -33,7 +33,8 @@ struct BookListView: View {
             } else {
                 List {
                     Section(header: Text("There Are \(series.books.count) Books In The Series")) {
-                        ForEach(series.books) { book in
+                        ForEach(series.books.sorted(by: { $0.seriesOrder < $1.seriesOrder })) { book in
+                           // ForEach(series.books) { book in
                             NavigationLink(value: book) {
                                 BooksRowView(book: book)
                                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {

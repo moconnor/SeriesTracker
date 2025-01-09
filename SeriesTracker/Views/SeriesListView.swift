@@ -40,7 +40,7 @@ struct SeriesListView: View {
                     ContentUnavailableView("Enter a book series.", systemImage: "book.fill")
                 } else {
                     List {
-                        Section(header: Text("My Book Series")) {
+                        Section(header: Text("My Book Series (\(sortedSeries.count))")) {
                             ForEach(sortedSeries) { bookSeries in
                                 NavigationLink(value: bookSeries) {
                                     SeriesRowView(series: bookSeries)
@@ -125,6 +125,16 @@ struct SeriesListView: View {
 
                                 }
 
+                            } catch DecodingError.keyNotFound(let key, let context) {
+                                Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
+                            } catch DecodingError.valueNotFound(let type, let context) {
+                                Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
+                            } catch DecodingError.typeMismatch(let type, let context) {
+                                Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
+                            } catch DecodingError.dataCorrupted(let context) {
+                                Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
+                            } catch let error as NSError {
+                                NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
                             } catch {
                                 importError = error
                                 showError = true

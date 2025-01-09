@@ -12,8 +12,21 @@ struct SeriesRowView: View {
     
     var body: some View {
         HStack {
-            Text(series.name)
-            Text("[\(series.books.count) books]")
+            
+            VStack(alignment: .leading) {
+                HStack{
+                    Text(series.name)
+                    Text("[\(series.books.count) books]")
+                }
+                HStack {
+                    Text(series.lastReadBookName() ?? "Unread")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    Text(series.lastReadBook() ?? Date(), style: .date)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
             Spacer()
             Image(systemName: series.readStatus().statusIcon())
                 .foregroundColor(series.readStatus().statusColor())
