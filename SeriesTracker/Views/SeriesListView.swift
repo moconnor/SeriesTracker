@@ -25,9 +25,9 @@ struct SeriesListView: View {
     @State private var isImporting = false
     @State private var showConfirmation = false
     @State private var seriesToDelete: Series?
-    @State private var importError: Error?
     @State private var showError = false
-    
+    @State private var errorMessage: String = ""
+
     var sortedSeries: [Series] {
         // Sort the array by date, oldest first
         series.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
@@ -108,46 +108,50 @@ struct SeriesListView: View {
                                 if url.startAccessingSecurityScopedResource() {
                                     let data = try Data(contentsOf: url)
                                     let decoder = JSONDecoder()
-                                    decoder.dateDecodingStrategy = .iso8601
                                     let newSeries = try decoder.decode([Series].self, from: data)
                                     url.stopAccessingSecurityScopedResource()
-
+                                    
                                     // this appears to clear the database without errors
                                     try modelContext.delete(model: Series.self)
                                     try modelContext.delete(model: Book.self)
                                     try modelContext.delete(model: Author.self)
-
+                                    
                                     // this inserts an author record the series and the books
                                     for series in newSeries {
                                         modelContext.insert(series)
                                     }
                                     try modelContext.save()
-
                                 }
-
-                            } catch DecodingError.keyNotFound(let key, let context) {
-                                Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
-                            } catch DecodingError.valueNotFound(let type, let context) {
-                                Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
-                            } catch DecodingError.typeMismatch(let type, let context) {
-                                Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
-                            } catch DecodingError.dataCorrupted(let context) {
-                                Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
-                            } catch let error as NSError {
-                                NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
-                            } catch {
-                                importError = error
+                                
+                            } catch let error {
+                                    switch error {
+                                    case DecodingError.keyNotFound(let key, let context):
+                                        errorMessage = "Could not find key \(key) in JSON: \(context.debugDescription)"
+                                        
+                                    case DecodingError.valueNotFound(let type, let context):
+                                        errorMessage = "Could not find type \(type) in JSON: \(context.debugDescription)"
+                                        
+                                    case DecodingError.typeMismatch(let type, let context):
+                                        errorMessage = "Type mismatch for type \(type) in JSON: \(context.debugDescription)"
+                                        
+                                    case DecodingError.dataCorrupted(let context):
+                                        errorMessage = "Data found to be corrupted in JSON: \(context.debugDescription)"
+                                        
+                                    case let error as NSError:
+                                        errorMessage = "Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)"
+                                    }
+                                    showError = true
+                                }
+                             case .failure(let error):
+                                errorMessage = "Error reading JSON file: \(error.localizedDescription)"
                                 showError = true
                             }
-                        case .failure(let error):
-                            print("Error reading JSON file: \(error.localizedDescription)")
                         }
-                    }
-                    .alert("Import Error", isPresented: $showError, presenting: importError) { _ in
-                        Button("OK", role: .cancel) {}
-                    } message: { error in
-                        Text(error.localizedDescription)
-                    }
+                        .alert("Error", isPresented: $showError) {
+                            Button("OK", role: .cancel) { }
+                        } message: {
+                            Text(errorMessage)
+                        }
                     
                     .fileExporter(isPresented: $isExporting,
                                   document: JSONFile(series: series),
