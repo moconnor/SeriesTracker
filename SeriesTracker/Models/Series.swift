@@ -15,8 +15,19 @@ class Series: Codable, Hashable, Identifiable {
     var id: UUID
     var name: String
     @Relationship(deleteRule: .cascade) var books: [Book]
-    var status: ReadStatus = ReadStatus.notStarted
     var author: Author
+    
+    var seriesStatus: ReadStatus {
+        var status: ReadStatus = .inProgress
+        if books.allSatisfy({$0.readStatus == .notStarted}) {
+            status = .notStarted
+        } else if books.allSatisfy({$0.readStatus == .completed}) {
+            status = .completed
+        } else if books.allSatisfy({$0.readStatus == .abandoned}) {
+            status = .abandoned
+        }
+        return status
+    }
     
     init(name: String, author: Author, books: [Book] = []) {
         self.id = UUID()
@@ -34,7 +45,6 @@ class Series: Codable, Hashable, Identifiable {
         id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID() // Default: new UUID
         name = try container.decodeIfPresent(String.self, forKey: .name) ?? "Untitled"
         books = try container.decodeIfPresent([Book].self, forKey: .books) ?? []
-        status = try container.decodeIfPresent(ReadStatus.self, forKey: .status) ?? .notStarted
         author = try container.decodeIfPresent(Author.self, forKey: .author) ?? Author(name: "Unknown")
     }
     
@@ -43,24 +53,10 @@ class Series: Codable, Hashable, Identifiable {
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
         try container.encode(books, forKey: .books)
-        try container.encode(status, forKey: .status)
         try container.encode(author, forKey: .author)
-    }
-
-    func readStatus() -> ReadStatus {
-        var status: ReadStatus = .inProgress
-        if books.allSatisfy({$0.readStatus == .notStarted}) {
-            status = .notStarted
-        } else if books.allSatisfy({$0.readStatus == .completed}) {
-            status = .completed
-        } else if books.allSatisfy({$0.readStatus == .abandoned}) {
-            status = .abandoned
-        }
-        return status
     }
     
     func lastReadBook() -> Date? {
-
         if let oldestObject = books.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
           //  print("The oldest object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
             return oldestObject.endDate
@@ -71,7 +67,6 @@ class Series: Codable, Hashable, Identifiable {
     }
     
     func lastReadBookName() -> String? {
-
         if let oldestObject = books.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
           //  print("The oldest object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
             return oldestObject.title
@@ -80,6 +75,7 @@ class Series: Codable, Hashable, Identifiable {
             return nil
         }
     }
+    
     static func exportToJSON(series: [Series]) throws -> Data {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
@@ -96,7 +92,6 @@ class Series: Codable, Hashable, Identifiable {
         }
         return jsonData
     }
-    
 }
 
 struct JSONFile: FileDocument {

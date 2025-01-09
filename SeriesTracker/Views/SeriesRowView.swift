@@ -28,8 +28,8 @@ struct SeriesRowView: View {
                 }
             }
             Spacer()
-            Image(systemName: series.readStatus().statusIcon())
-                .foregroundColor(series.readStatus().statusColor())
+            Image(systemName: series.seriesStatus.statusIcon())
+                .foregroundColor(series.seriesStatus.statusColor())
         }
     }
 }

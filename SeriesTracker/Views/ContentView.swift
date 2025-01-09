@@ -35,6 +35,7 @@ struct ContentView: View {
         let series = Series.randomSeries()
         preview.add(items: [series])
     }
-    return ContentView().modelContainer(preview.container) .preferredColorScheme(.dark)
+    return ContentView().modelContainer(preview.container)
+        .preferredColorScheme(.dark)
 }
  

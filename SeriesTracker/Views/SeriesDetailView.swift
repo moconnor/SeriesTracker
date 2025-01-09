@@ -16,6 +16,7 @@ struct SeriesDetailView: View {
     @State private var newBookOrder = 1
     @State private var addingNewBook = false
     @State private var editSeries: Bool = false
+    @State private var status: ReadStatus = .notStarted
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -23,7 +24,7 @@ struct SeriesDetailView: View {
             Text(series.name + " Details")
                 .font(.title)
                 .bold()
-            Text("Status: " + series.readStatus().rawValue)
+            Text("Status: " + series.seriesStatus.rawValue)
                 .font(.headline)
             
             Divider()
