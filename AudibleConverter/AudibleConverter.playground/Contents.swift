@@ -33,13 +33,28 @@ do {
 
 var count = 1
 var seriesCount = 0
+var authorCount = 0
 var seriesSet: Set<String> = []
 var seriesDictionaryArray: [[String: Any]] = []
+var authorsUUIDDictionary: [String:String] = [:]
 let variousAuthorDictionary = ["name": "Various", "id": UUID().uuidString]
 
 for dictionary in dictionaryArray {
     
-    let authorDictionary = ["name": dictionary["AuthorNames"] as! String, "id": UUID().uuidString]
+    var authorsName = "Unknown"
+    var authorUUIDString = ""
+    if let _ = dictionary["AuthorNames"] as? String {
+        authorsName = dictionary["AuthorNames"] as! String
+    }
+    
+    if authorsUUIDDictionary[authorsName] == nil {
+        authorsUUIDDictionary[authorsName] = UUID().uuidString
+        authorCount += 1
+    }
+    authorUUIDString = authorsUUIDDictionary[authorsName]!
+    
+    
+    let authorDictionary = ["name": authorsName, "id": authorUUIDString]
     
     var seriesOrder = 0
     let seriesOrderString = dictionary["SeriesOrder"] as! String//   "SeriesOrder": "6 : Laundry Files",
@@ -103,10 +118,17 @@ for dictionary in dictionaryArray {
     }
     count += 1
 }
-
-
-
 print("Series Count: \(seriesCount)")
+
+print("Author Count: \(authorCount)")
+
+for authorKey in authorsUUIDDictionary.keys {
+    if let authorUUID = authorsUUIDDictionary[authorKey] {
+        print("\(authorKey): (\(authorUUID))")
+    } else {
+        print("\(authorKey): Missing UUID?!?")
+    }
+}
 
 do {
     let seriesJSONData = try JSONSerialization.data(withJSONObject: seriesDictionaryArray, options: [.prettyPrinted])
