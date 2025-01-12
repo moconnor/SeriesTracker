@@ -28,6 +28,9 @@ struct SeriesListView: View {
     @State private var importError: Error?
     @State private var showError = false
     @State private var filterListBy:SeriesStatus = .everything
+    @State private var showAlert = false
+    @State private var alertTitle: String = "Error"
+    @State private var alertMessage: String = ""
     
     var sortedSeries: [Series] {
         // Sort the array by date, oldest first
@@ -39,23 +42,52 @@ struct SeriesListView: View {
         }
     }
     
-    var hiddenSeries: Int {
-        series.filter{ $0.shouldHide() }.count
+    var currentlyReading:String {
+        if let inProgressSeries = series.filter({$0.status == .reading}).first {
+            let books = inProgressSeries.books.filter({$0.readStatus == .inProgress})
+            
+            if books.isEmpty {
+                return "None"
+            } else if books.count > 1 {
+                return "More than 1?"
+            } else {
+                if let book = books.first {
+                    return book.title
+                } else {
+                    return "No Book Title"
+                }
+            }
+        } else {
+            return "No Series in Progress"
+        }
     }
     
+    var suggestedNextRead:String {
+        return "TBD"
+    }
     
     
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
                 HStack{
-                    Text("Filter Series")
+                    Text("Filter Series").bold()
                     Picker("Show Series", selection: $filterListBy) {
                         ForEach(SeriesStatus.allCases, id: \.self) { status in
                             Text(status.rawValue.capitalized).tag(status)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+                HStack{
+                    Text("Currently Reading").bold()
+                    Text("\(currentlyReading)")
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+                HStack{
+                    Text("Suggested Next").bold()
+                    Text("\(suggestedNextRead)")
+                        .frame(maxWidth: .infinity, alignment: .trailing)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -65,7 +97,6 @@ struct SeriesListView: View {
                     ContentUnavailableView("Enter a book series.", systemImage: "book.fill")
                 } else {
                     List {
-//                        Section(header: Text("Series (\(sortedSeries.count)) + \(hiddenSeries) hidden, Total \(series.count)"))
                         Section(header: seriesStatusCountView) {
                             
                             
@@ -139,56 +170,65 @@ struct SeriesListView: View {
                                     decoder.dateDecodingStrategy = .iso8601
                                     let newSeries = try decoder.decode([Series].self, from: data)
                                     url.stopAccessingSecurityScopedResource()
-
+                                    
                                     // this appears to clear the database without errors
                                     try modelContext.delete(model: Series.self)
                                     try modelContext.delete(model: Book.self)
                                     try modelContext.delete(model: Author.self)
-
+                                    
                                     // this inserts an author record the series and the books
                                     for series in newSeries {
                                         modelContext.insert(series)
                                     }
                                     try modelContext.save()
-
                                 }
-
-                            } catch DecodingError.keyNotFound(let key, let context) {
-                                Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
-                            } catch DecodingError.valueNotFound(let type, let context) {
-                                Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
-                            } catch DecodingError.typeMismatch(let type, let context) {
-                                Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
-                            } catch DecodingError.dataCorrupted(let context) {
-                                Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
-                            } catch let error as NSError {
-                                NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
-                            } catch {
-                                importError = error
-                                showError = true
+                                
+                            } catch let error {
+                                switch error {
+                                case DecodingError.keyNotFound(let key, let context):
+                                    alertMessage = "Could not find key \(key) in JSON: \(context.debugDescription)"
+                                    
+                                case DecodingError.valueNotFound(let type, let context):
+                                    alertMessage = "Could not find type \(type) in JSON: \(context.debugDescription)"
+                                    
+                                case DecodingError.typeMismatch(let type, let context):
+                                    alertMessage = "Type mismatch for type \(type) in JSON: \(context.debugDescription)"
+                                    
+                                case DecodingError.dataCorrupted(let context):
+                                    alertMessage = "Data found to be corrupted in JSON: \(context.debugDescription)"
+                                    
+                                case let error as NSError:
+                                    alertMessage = "Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)"
+                                }
+                                showAlert = true
                             }
                         case .failure(let error):
-                            print("Error reading JSON file: \(error.localizedDescription)")
+                            alertMessage = "Error reading JSON file: \(error.localizedDescription)"
+                            showAlert = true
                         }
                     }
-                    .alert("Import Error", isPresented: $showError, presenting: importError) { _ in
-                        Button("OK", role: .cancel) {}
-                    } message: { error in
-                        Text(error.localizedDescription)
+                    
+                    .alert(alertTitle, isPresented: $showAlert) {
+                        Button("OK", role: .cancel) { }
+                    } message: {
+                        Text(alertMessage)
                     }
                     
                     .fileExporter(isPresented: $isExporting,
                                   document: JSONFile(series: series),
                                   contentType: .json,
                                   defaultFilename: "Series-\(formatter.string(from: Date())).json") { result in
+                        showAlert = true
+                        
                         switch result {
                         case .success(let url):
-                            print("JSON file saved successfully at: \(url.path)")
+                            alertTitle = "Success"
+                            alertMessage = "JSON file saved successfully at: \(url.path)"
                         case .failure(let error):
-                            print("Error saving JSON file: \(error.localizedDescription)")
+                            alertMessage = "Error saving JSON file: \(error.localizedDescription)"
                         }
                     }
-
+                    
                 }
             }
             .sheet(isPresented: $createNewSeries) {

@@ -16,6 +16,7 @@ struct SeriesDetailView: View {
     @State private var newBookOrder = 1
     @State private var addingNewBook = false
     @State private var editSeries: Bool = false
+    @State private var status: ReadStatus = .notStarted
     
     var body: some View {
         VStack(alignment: .leading) {

@@ -20,11 +20,22 @@ struct ContentView: View {
     }
 }
 
-#Preview {
+#Preview("Light") {
+    let preview = Preview([Series.self])
+    for _ in 0..<Int.random(in: 1..<15) {
+        let series = Series.randomSeries()
+        preview.add(items: [series])
+    }
+    return ContentView().modelContainer(preview.container) .preferredColorScheme(.light)
+}
+
+#Preview("Dark") {
     let preview = Preview([Series.self])
     for _ in 0..<Int.random(in: 1..<15) {
         let series = Series.randomSeries()
         preview.add(items: [series])
     }
     return ContentView().modelContainer(preview.container)
+        .preferredColorScheme(.dark)
 }
+ 
