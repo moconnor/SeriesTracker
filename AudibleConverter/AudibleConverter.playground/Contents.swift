@@ -35,6 +35,8 @@ var count = 1
 var seriesCount = 0
 var seriesSet: Set<String> = []
 var seriesDictionaryArray: [[String: Any]] = []
+let variousAuthorDictionary = ["name": "Various", "id": UUID().uuidString]
+
 for dictionary in dictionaryArray {
     
     let authorDictionary = ["name": dictionary["AuthorNames"] as! String, "id": UUID().uuidString]
@@ -67,8 +69,12 @@ for dictionary in dictionaryArray {
     if let seriesNameString = dictionary["SeriesNames"] as? String {//}, seriesName != "" {
 //        print("\(count) - Series: \(seriesName) - Title: \(dictionary["Title"] as! String)")
         var seriesName = seriesNameString
+        var seriesStatus: String = "Undetermined"
+        var seriesAuthorDictionary = authorDictionary
         if seriesNameString == "" {
             seriesName = "Individual Books - 894847592"
+            seriesStatus = "Not a series"
+            seriesAuthorDictionary = variousAuthorDictionary
         } else {
             seriesName = seriesNameString
         }
@@ -76,7 +82,8 @@ for dictionary in dictionaryArray {
             
             var seriesDictionary = ["name": seriesName,
                                     "id": UUID().uuidString,
-                                    "status":"In Progress",
+                                    "status":seriesStatus,
+                                    "author": seriesAuthorDictionary,
                                     ] as [String : Any]
 
             seriesDictionary["books"] = [bookDictionary]
@@ -94,29 +101,6 @@ for dictionary in dictionaryArray {
             }
         }
     }
-    
-//    else {
-//        // books with no series
-//        let noSeriesName = "Individual Books - 7584363"
-//        if let parentIndex = seriesDictionaryArray.firstIndex(where: { $0["name"] as? String == noSeriesName }) {
-//            // Extract the embedded array of dictionaries as mutable
-//            var books = seriesDictionaryArray[parentIndex]["books"] as? [[String: Any]] ?? []
-//            books.append(bookDictionary)
-//            // Reassign the modified array back to the parent dictionary
-//            seriesDictionaryArray[parentIndex]["books"] = books
-//            print("Series '\(noSeriesName)' contains (\(books.count) books")
-//        } else {
-//            var seriesDictionary = ["name": noSeriesName,
-//                                    "id": UUID().uuidString,
-//                                    "status":"In Progress",
-//                                    ] as [String : Any]
-//
-//            seriesDictionary["books"] = [bookDictionary]
-//            seriesCount += 1
-//            seriesDictionaryArray.append(seriesDictionary)
-//        }
-//        
-//    }
     count += 1
 }
 

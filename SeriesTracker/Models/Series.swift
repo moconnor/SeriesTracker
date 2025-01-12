@@ -15,7 +15,7 @@ class Series: Codable, Hashable, Identifiable {
     var id: UUID
     var name: String
     @Relationship(deleteRule: .cascade) var books: [Book]
-    var status: ReadStatus = ReadStatus.notStarted
+    var status: SeriesStatus = SeriesStatus.inProgress
     var author: Author
     
     init(name: String, author: Author, books: [Book] = []) {
@@ -34,7 +34,7 @@ class Series: Codable, Hashable, Identifiable {
         id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID() // Default: new UUID
         name = try container.decodeIfPresent(String.self, forKey: .name) ?? "Untitled"
         books = try container.decodeIfPresent([Book].self, forKey: .books) ?? []
-        status = try container.decodeIfPresent(ReadStatus.self, forKey: .status) ?? .notStarted
+        status = try container.decodeIfPresent(SeriesStatus.self, forKey: .status) ?? .inProgress
         author = try container.decodeIfPresent(Author.self, forKey: .author) ?? Author(name: "Unknown")
     }
     
@@ -71,7 +71,7 @@ class Series: Codable, Hashable, Identifiable {
     }
     
     func shouldHide() -> Bool {
-        if status == .abandoned || status == .completed {
+        if status == .abandoned || status == .completed || status == .notASeries {
             return true
         }
         return false

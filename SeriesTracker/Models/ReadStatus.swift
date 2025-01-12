@@ -13,7 +13,6 @@ enum ReadStatus: String, Codable, CaseIterable {
     case inProgress = "In Progress"
     case completed = "Completed"
     case abandoned = "Abandoned"
-    case waitingForNextBook = "Waiting For Next Book"
     
     func statusIcon() -> String {
         switch self {
@@ -21,7 +20,6 @@ enum ReadStatus: String, Codable, CaseIterable {
         case .inProgress: return "circle.lefthalf.filled"
         case .completed: return "checkmark.circle.fill"
         case .abandoned: return "xmark.circle.fill"
-        case .waitingForNextBook: return "circle.lefthalf.filled"
         }
     }
     
@@ -31,7 +29,6 @@ enum ReadStatus: String, Codable, CaseIterable {
         case .inProgress: return .blue
         case .completed: return .green
         case .abandoned: return .red
-        case .waitingForNextBook: return .yellow
         }
     }
 }

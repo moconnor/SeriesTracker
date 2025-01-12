@@ -19,12 +19,20 @@ struct SeriesRowView: View {
                     Text("[\(series.books.count) books]")
                 }
                 HStack {
-                    Text(series.lastReadBookName() ?? "Unread")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    Text(series.lastReadBook() ?? Date(), style: .date)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    switch series.status {
+                    case .inProgress:
+                        Text(series.lastReadBookName() ?? "Unread")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Text(series.lastReadBook() ?? Date(), style: .date)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    default :
+                        Text(series.status.rawValue)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    
                 }
             }
             Spacer()

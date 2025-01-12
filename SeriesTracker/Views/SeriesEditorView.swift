@@ -43,7 +43,7 @@ struct SeriesEditorView: View {
                     authorSelectionView
                     
                     Picker("Status", selection: $series.status) {
-                        ForEach(ReadStatus.allCases, id: \.self) { status in
+                        ForEach(SeriesStatus.allCases, id: \.self) { status in
                             Text(status.rawValue.capitalized).tag(status)
                         }
                     }

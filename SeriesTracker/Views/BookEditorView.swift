@@ -160,7 +160,7 @@ struct BookEditorView: View {
         case .inProgress:
             book.endDate = nil
             book.rating = nil
-        case .completed, .abandoned, .waitingForNextBook:
+        case .completed, .abandoned:
             if book.startDate == nil {
                 book.startDate = book.endDate
             }
