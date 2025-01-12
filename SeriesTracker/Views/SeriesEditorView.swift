@@ -41,6 +41,16 @@ struct SeriesEditorView: View {
                     
                     // Author picker with add new option
                     authorSelectionView
+                    
+                    Picker("Status", selection: $series.status) {
+                        ForEach(SeriesStatus.allCases, id: \.self) { status in
+                            Text(status.rawValue.capitalized).tag(status)
+                        }
+                    }
+                }
+                Section(header: Text("Notes")) {
+                    TextEditor(text: $series.notes)
+                        .frame(minHeight: 100)
                 }
             }
             .navigationTitle(editorTitle)

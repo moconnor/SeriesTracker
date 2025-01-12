@@ -25,23 +25,81 @@ struct SeriesListView: View {
     @State private var isImporting = false
     @State private var showConfirmation = false
     @State private var seriesToDelete: Series?
+    @State private var importError: Error?
+    @State private var showError = false
+    @State private var filterListBy:SeriesStatus = .everything
     @State private var showAlert = false
     @State private var alertTitle: String = "Error"
     @State private var alertMessage: String = ""
     
     var sortedSeries: [Series] {
         // Sort the array by date, oldest first
-        series.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
+        //series.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
+        if filterListBy == .everything {
+            series.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
+        } else {
+            series.filter { $0.status == filterListBy }.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
+        }
     }
+    
+    var currentlyReading:String {
+        if let inProgressSeries = series.filter({$0.status == .reading}).first {
+            let books = inProgressSeries.books.filter({$0.readStatus == .inProgress})
+            
+            if books.isEmpty {
+                return "None"
+            } else if books.count > 1 {
+                return "More than 1?"
+            } else {
+                if let book = books.first {
+                    return book.title
+                } else {
+                    return "No Book Title"
+                }
+            }
+        } else {
+            return "No Series in Progress"
+        }
+    }
+    
+    var suggestedNextRead:String {
+        return "TBD"
+    }
+    
     
     var body: some View {
         NavigationStack {
+            VStack(alignment: .leading) {
+                HStack{
+                    Text("Filter Series").bold()
+                    Picker("Show Series", selection: $filterListBy) {
+                        ForEach(SeriesStatus.allCases, id: \.self) { status in
+                            Text(status.rawValue.capitalized).tag(status)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+                HStack{
+                    Text("Currently Reading").bold()
+                    Text("\(currentlyReading)")
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+                HStack{
+                    Text("Suggested Next").bold()
+                    Text("\(suggestedNextRead)")
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal)
             VStack {
                 if sortedSeries.isEmpty {
                     ContentUnavailableView("Enter a book series.", systemImage: "book.fill")
                 } else {
                     List {
-                        Section(header: Text("My Book Series (\(sortedSeries.count))")) {
+                        Section(header: seriesStatusCountView) {
+                            
+                            
                             ForEach(sortedSeries) { bookSeries in
                                 NavigationLink(value: bookSeries) {
                                     SeriesRowView(series: bookSeries)
@@ -179,6 +237,15 @@ struct SeriesListView: View {
         }
     }
     
+    private func statusCount(_ status:SeriesStatus) -> Int {
+        if status == .everything {
+            return series.count
+        } else {
+            return series.filter({$0.status == status}).count
+        }
+    }
+
+    
     private func deleteASeries() {
         guard let series = seriesToDelete else { return }
         
@@ -190,6 +257,37 @@ struct SeriesListView: View {
             print("Error deleting series: \(error)")
         }
         seriesToDelete = nil
+    }
+    
+    private var seriesStatusCountView : some View {
+        
+        HStack(alignment: .center) {
+            ForEach(SeriesStatus.allCases, id: \.self) { status in
+                if status == filterListBy {
+                    VStack {
+                        Text(status.statusAbbreviation())
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(Color.accentColor)
+                        Text("\(statusCount(status))")
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundColor(Color.accentColor)
+                    }
+                    .frame(maxWidth: .infinity) // Expand each VStack to fill available space
+                } else {
+                    if statusCount(status) > 0 {
+                        VStack {
+                            Text(status.statusAbbreviation())
+                                .font(.system(size: 10))
+                                .foregroundColor(Color.primary)
+                            Text("\(statusCount(status))")
+                                .font(.system(size: 11))
+                                .foregroundColor(Color.primary)
+                        }
+                        .frame(maxWidth: .infinity) // Expand each VStack to fill available space
+                    }
+                }
+            }
+        }
     }
     
 }

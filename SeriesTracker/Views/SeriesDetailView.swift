@@ -24,7 +24,8 @@ struct SeriesDetailView: View {
             Text(series.name + " Details")
                 .font(.title)
                 .bold()
-            Text("Status: " + series.seriesStatus.rawValue)
+                .padding(.vertical)
+            Text("Status: " + series.status.rawValue)
                 .font(.headline)
             
             Divider()
@@ -37,7 +38,12 @@ struct SeriesDetailView: View {
                     .padding(.horizontal)
                 }
             Divider()
+
+            TextField("Notes", text: $series.notes, axis: .vertical)
+                .lineLimit(3...5)
             
+            Divider()
+
             BookListView(series: series)
             
             Divider()

@@ -15,29 +15,35 @@ class Series: Codable, Hashable, Identifiable {
     var id: UUID
     var name: String
     @Relationship(deleteRule: .cascade) var books: [Book]
+    var status: SeriesStatus = SeriesStatus.inProgress
     var author: Author
+    var notes: String
+
+    // TODO:  I sorta overrode both this var and the readStatus var farther below with the manually set seriesStatus
+    //        I need to think about how best to use these or stick with manual settings
     
-    var seriesStatus: ReadStatus {
-        var status: ReadStatus = .inProgress
-        if books.allSatisfy({$0.readStatus == .notStarted}) {
-            status = .notStarted
-        } else if books.allSatisfy({$0.readStatus == .completed}) {
-            status = .completed
-        } else if books.allSatisfy({$0.readStatus == .abandoned}) {
-            status = .abandoned
-        }
-        return status
-    }
+//    var seriesStatus: ReadStatus {
+//        var status: ReadStatus = .inProgress
+//        if books.allSatisfy({$0.readStatus == .notStarted}) {
+//            status = .notStarted
+//        } else if books.allSatisfy({$0.readStatus == .completed}) {
+//            status = .completed
+//        } else if books.allSatisfy({$0.readStatus == .abandoned}) {
+//            status = .abandoned
+//        }
+//        return status
+//    }
     
     init(name: String, author: Author, books: [Book] = []) {
         self.id = UUID()
         self.name = name
         self.books = books
         self.author = author
+        self.notes = ""
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, name, books, status, author
+        case id, name, books, status, author, notes
     }
     
     required init(from decoder: Decoder) throws {
@@ -45,7 +51,9 @@ class Series: Codable, Hashable, Identifiable {
         id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID() // Default: new UUID
         name = try container.decodeIfPresent(String.self, forKey: .name) ?? "Untitled"
         books = try container.decodeIfPresent([Book].self, forKey: .books) ?? []
+        status = try container.decodeIfPresent(SeriesStatus.self, forKey: .status) ?? .inProgress
         author = try container.decodeIfPresent(Author.self, forKey: .author) ?? Author(name: "Unknown")
+        notes = try container.decodeIfPresent(String.self, forKey: .notes) ?? "" // Default: empty string
     }
     
     func encode(to encoder: Encoder) throws {
@@ -54,8 +62,21 @@ class Series: Codable, Hashable, Identifiable {
         try container.encode(name, forKey: .name)
         try container.encode(books, forKey: .books)
         try container.encode(author, forKey: .author)
+        try container.encode(notes, forKey: .notes)
     }
-    
+
+//    func readStatus() -> ReadStatus {
+//        var status: ReadStatus = .inProgress
+//        if books.allSatisfy({$0.readStatus == .notStarted}) {
+//            status = .notStarted
+//        } else if books.allSatisfy({$0.readStatus == .completed}) {
+//            status = .completed
+//        } else if books.allSatisfy({$0.readStatus == .abandoned}) {
+//            status = .abandoned
+//        }
+//        return status
+//    }
+
     func lastReadBook() -> Date? {
         if let oldestObject = books.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
           //  print("The oldest object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
@@ -64,6 +85,13 @@ class Series: Codable, Hashable, Identifiable {
           //  print("The array is empty")
             return nil
         }
+    }
+    
+    func shouldHide() -> Bool {
+        if status == .abandoned || status == .completed || status == .notASeries {
+            return true
+        }
+        return false
     }
     
     func lastReadBookName() -> String? {
