@@ -71,8 +71,6 @@ struct BookEditorView: View {
                             Text(status.rawValue.capitalized).tag(status)
                         }
                     }
-                    //.pickerStyle(
-//                    .pickerStyle(SegmentedPickerStyle())
 
                     if book.readStatus != .notStarted {
                         DatePicker("Start Date", selection: Binding(

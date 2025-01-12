@@ -27,9 +27,6 @@ struct SeriesRowView: View {
                         Text(" - \(series.status.rawValue)")
                             .font(.caption)
                             .foregroundColor(.secondary)
-//                        Text(series.lastReadBook() ?? Date(), style: .date)
-//                            .font(.caption)
-//                            .foregroundColor(.secondary)
                     default :
                         Text(series.status.rawValue)
                             .font(.caption)

@@ -19,18 +19,20 @@ class Series: Codable, Hashable, Identifiable {
     var author: Author
     var notes: String
 
+    // TODO:  I sorta overrode both this var and the readStatus var farther below with the manually set seriesStatus
+    //        I need to think about how best to use these or stick with manual settings
     
-    var seriesStatus: ReadStatus {
-        var status: ReadStatus = .inProgress
-        if books.allSatisfy({$0.readStatus == .notStarted}) {
-            status = .notStarted
-        } else if books.allSatisfy({$0.readStatus == .completed}) {
-            status = .completed
-        } else if books.allSatisfy({$0.readStatus == .abandoned}) {
-            status = .abandoned
-        }
-        return status
-    }
+//    var seriesStatus: ReadStatus {
+//        var status: ReadStatus = .inProgress
+//        if books.allSatisfy({$0.readStatus == .notStarted}) {
+//            status = .notStarted
+//        } else if books.allSatisfy({$0.readStatus == .completed}) {
+//            status = .completed
+//        } else if books.allSatisfy({$0.readStatus == .abandoned}) {
+//            status = .abandoned
+//        }
+//        return status
+//    }
     
     init(name: String, author: Author, books: [Book] = []) {
         self.id = UUID()
