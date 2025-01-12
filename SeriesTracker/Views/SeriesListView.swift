@@ -27,36 +27,46 @@ struct SeriesListView: View {
     @State private var seriesToDelete: Series?
     @State private var importError: Error?
     @State private var showError = false
-    @State private var showEverything = true
+    @State private var filterListBy:SeriesStatus = .everything
     
     var sortedSeries: [Series] {
         // Sort the array by date, oldest first
         //series.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
-        series.filter { showEverything || !$0.shouldHide() }.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
+        if filterListBy == .everything {
+            series.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
+        } else {
+            series.filter { $0.status == filterListBy }.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
+        }
     }
     
     var hiddenSeries: Int {
-        if showEverything {
-            0
-        } else {
-            series.filter{ $0.shouldHide() }.count
-        }
+        series.filter{ $0.shouldHide() }.count
     }
     
     
     
     var body: some View {
         NavigationStack {
-            Toggle("Show Everything", isOn: $showEverything)
-                            .padding(.horizontal)
-                            .toggleStyle(SwitchToggleStyle(tint: .blue)) // Optional styling
-            
+            VStack(alignment: .leading) {
+                HStack{
+                    Text("Filter Series")
+                    Picker("Show Series", selection: $filterListBy) {
+                        ForEach(SeriesStatus.allCases, id: \.self) { status in
+                            Text(status.rawValue.capitalized).tag(status)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal)
             VStack {
                 if sortedSeries.isEmpty {
                     ContentUnavailableView("Enter a book series.", systemImage: "book.fill")
                 } else {
                     List {
-                        Section(header: Text("Series (\(sortedSeries.count)) + \(hiddenSeries) hidden, Total \(series.count)")) {
+//                        Section(header: Text("Series (\(sortedSeries.count)) + \(hiddenSeries) hidden, Total \(series.count)"))
+                        Section(header: seriesStatusCountView) {
                             
                             
                             ForEach(sortedSeries) { bookSeries in
@@ -187,6 +197,15 @@ struct SeriesListView: View {
         }
     }
     
+    private func statusCount(_ status:SeriesStatus) -> Int {
+        if status == .everything {
+            return series.count
+        } else {
+            return series.filter({$0.status == status}).count
+        }
+    }
+
+    
     private func deleteASeries() {
         guard let series = seriesToDelete else { return }
         
@@ -198,6 +217,37 @@ struct SeriesListView: View {
             print("Error deleting series: \(error)")
         }
         seriesToDelete = nil
+    }
+    
+    private var seriesStatusCountView : some View {
+        
+        HStack(alignment: .center) {
+            ForEach(SeriesStatus.allCases, id: \.self) { status in
+                if status == filterListBy {
+                    VStack {
+                        Text(status.statusAbbreviation())
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(Color.accentColor)
+                        Text("\(statusCount(status))")
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundColor(Color.accentColor)
+                    }
+                    .frame(maxWidth: .infinity) // Expand each VStack to fill available space
+                } else {
+                    if statusCount(status) > 0 {
+                        VStack {
+                            Text(status.statusAbbreviation())
+                                .font(.system(size: 10))
+                                .foregroundColor(Color.primary)
+                            Text("\(statusCount(status))")
+                                .font(.system(size: 11))
+                                .foregroundColor(Color.primary)
+                        }
+                        .frame(maxWidth: .infinity) // Expand each VStack to fill available space
+                    }
+                }
+            }
+        }
     }
     
 }

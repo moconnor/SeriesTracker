@@ -48,6 +48,10 @@ struct SeriesEditorView: View {
                         }
                     }
                 }
+                Section(header: Text("Notes")) {
+                    TextEditor(text: $series.notes)
+                        .frame(minHeight: 100)
+                }
             }
             .navigationTitle(editorTitle)
             .toolbar {

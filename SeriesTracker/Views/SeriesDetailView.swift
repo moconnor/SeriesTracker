@@ -38,6 +38,11 @@ struct SeriesDetailView: View {
                 }
             Divider()
 
+            TextField("Notes", text: $series.notes, axis: .vertical)
+                .lineLimit(3...5)
+            
+            Divider()
+
             BookListView(series: series)
             
             Divider()

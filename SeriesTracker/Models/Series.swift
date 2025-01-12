@@ -17,16 +17,19 @@ class Series: Codable, Hashable, Identifiable {
     @Relationship(deleteRule: .cascade) var books: [Book]
     var status: SeriesStatus = SeriesStatus.inProgress
     var author: Author
+    var notes: String
+
     
     init(name: String, author: Author, books: [Book] = []) {
         self.id = UUID()
         self.name = name
         self.books = books
         self.author = author
+        self.notes = ""
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, name, books, status, author
+        case id, name, books, status, author, notes
     }
     
     required init(from decoder: Decoder) throws {
@@ -36,6 +39,7 @@ class Series: Codable, Hashable, Identifiable {
         books = try container.decodeIfPresent([Book].self, forKey: .books) ?? []
         status = try container.decodeIfPresent(SeriesStatus.self, forKey: .status) ?? .inProgress
         author = try container.decodeIfPresent(Author.self, forKey: .author) ?? Author(name: "Unknown")
+        notes = try container.decodeIfPresent(String.self, forKey: .notes) ?? "" // Default: empty string
     }
     
     func encode(to encoder: Encoder) throws {
@@ -45,6 +49,7 @@ class Series: Codable, Hashable, Identifiable {
         try container.encode(books, forKey: .books)
         try container.encode(status, forKey: .status)
         try container.encode(author, forKey: .author)
+        try container.encode(notes, forKey: .notes)
     }
 
     func readStatus() -> ReadStatus {
@@ -58,7 +63,7 @@ class Series: Codable, Hashable, Identifiable {
         }
         return status
     }
-    
+        
     func lastReadBook() -> Date? {
 
         if let oldestObject = books.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
