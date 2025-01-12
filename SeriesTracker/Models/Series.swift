@@ -70,6 +70,13 @@ class Series: Codable, Hashable, Identifiable {
         }
     }
     
+    func shouldHide() -> Bool {
+        if status == .abandoned || status == .completed {
+            return true
+        }
+        return false
+    }
+    
     func lastReadBookName() -> String? {
 
         if let oldestObject = books.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {

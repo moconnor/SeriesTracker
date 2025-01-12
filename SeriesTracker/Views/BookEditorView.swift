@@ -71,8 +71,9 @@ struct BookEditorView: View {
                             Text(status.rawValue.capitalized).tag(status)
                         }
                     }
-                    .pickerStyle(SegmentedPickerStyle())
-                    
+                    //.pickerStyle(
+//                    .pickerStyle(SegmentedPickerStyle())
+
                     if book.readStatus != .notStarted {
                         DatePicker("Start Date", selection: Binding(
                             get: { book.startDate ?? Date() },
@@ -159,7 +160,7 @@ struct BookEditorView: View {
         case .inProgress:
             book.endDate = nil
             book.rating = nil
-        case .completed, .abandoned:
+        case .completed, .abandoned, .waitingForNextBook:
             if book.startDate == nil {
                 book.startDate = book.endDate
             }

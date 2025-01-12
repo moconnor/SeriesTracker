@@ -41,6 +41,12 @@ struct SeriesEditorView: View {
                     
                     // Author picker with add new option
                     authorSelectionView
+                    
+                    Picker("Status", selection: $series.status) {
+                        ForEach(ReadStatus.allCases, id: \.self) { status in
+                            Text(status.rawValue.capitalized).tag(status)
+                        }
+                    }
                 }
             }
             .navigationTitle(editorTitle)

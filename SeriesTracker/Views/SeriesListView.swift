@@ -27,20 +27,38 @@ struct SeriesListView: View {
     @State private var seriesToDelete: Series?
     @State private var importError: Error?
     @State private var showError = false
+    @State private var showEverything = true
     
     var sortedSeries: [Series] {
         // Sort the array by date, oldest first
-        series.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
+        //series.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
+        series.filter { showEverything || !$0.shouldHide() }.sorted(by: { $0.lastReadBook() ?? Date() < $1.lastReadBook() ?? Date()  })
     }
+    
+    var hiddenSeries: Int {
+        if showEverything {
+            0
+        } else {
+            series.filter{ $0.shouldHide() }.count
+        }
+    }
+    
+    
     
     var body: some View {
         NavigationStack {
+            Toggle("Show Everything", isOn: $showEverything)
+                            .padding(.horizontal)
+                            .toggleStyle(SwitchToggleStyle(tint: .blue)) // Optional styling
+            
             VStack {
                 if sortedSeries.isEmpty {
                     ContentUnavailableView("Enter a book series.", systemImage: "book.fill")
                 } else {
                     List {
-                        Section(header: Text("My Book Series (\(sortedSeries.count))")) {
+                        Section(header: Text("Series (\(sortedSeries.count)) + \(hiddenSeries) hidden, Total \(series.count)")) {
+                            
+                            
                             ForEach(sortedSeries) { bookSeries in
                                 NavigationLink(value: bookSeries) {
                                     SeriesRowView(series: bookSeries)
