@@ -27,6 +27,10 @@ struct SeriesRowView: View {
                         Text(" - \(series.status.rawValue)")
                             .font(.caption)
                             .foregroundColor(.secondary)
+                    case .inProgress:
+                        Text("\(series.nextBookToRead()) - Not Started")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
                     default :
                         Text(series.status.rawValue)
                             .font(.caption)

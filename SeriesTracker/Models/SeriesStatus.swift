@@ -18,7 +18,7 @@ enum SeriesStatus: String, Codable, CaseIterable {
     case notASeries = "Not a series"
     case abandoned = "Abandoned"
     case needsInvestigation = "Needs Investigation"
-    case undetermined = "Undetermined"
+    case notstarted = "Not Started"
 
     func statusIcon() -> String {
         switch self {
@@ -29,7 +29,7 @@ enum SeriesStatus: String, Codable, CaseIterable {
         case .waitingForNextBook: return "pause.circle.fill"
         case .needsInvestigation: return "rectangle.and.text.magnifyingglass"
         case .inactive: return "stop.circle.fill"
-        case .undetermined: return "questionmark.diamond"
+        case .notstarted: return "questionmark.diamond"
         case .reading: return "book.pages.fill"
         case .everything: return ""
         }
@@ -44,7 +44,7 @@ enum SeriesStatus: String, Codable, CaseIterable {
         case .waitingForNextBook: return .yellow
         case .needsInvestigation: return .orange
         case .inactive: return .purple
-        case .undetermined: return .yellow
+        case .notstarted: return .yellow
         case .everything: return .red
         case .reading: return .blue
 
@@ -60,7 +60,7 @@ enum SeriesStatus: String, Codable, CaseIterable {
         case .waitingForNextBook: return "wait"
         case .needsInvestigation: return "nvst"
         case .inactive: return "!act"
-        case .undetermined: return "!det"
+        case .notstarted: return "!str"
         case .everything: return "all"
         case .reading: return "read"
 

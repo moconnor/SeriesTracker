@@ -63,9 +63,50 @@ struct SeriesListView: View {
     }
     
     var suggestedNextRead:String {
-        return "TBD"
+        // series needs to be inProgess
+        // in progress series has the oldest last completed date
+        // series needs a book not started
+        
+        var candidates:[[String:Any]] = []
+        
+        let inProgressSeries = series.filter({$0.status == .inProgress && $0.containsNotStartedBooks()})
+        print("In progress series \(inProgressSeries.count)")
+        for aSeries in inProgressSeries {
+            if let lastReadbookDate = aSeries.lastReadBook(), let lastReadBookName = aSeries.lastReadBookName() {
+                
+                let candidate = ["series":aSeries.name,"book":lastReadBookName,"date":lastReadbookDate] as [String : Any]
+                candidates.append(candidate)
+            }
+        }
+        
+        for candidate in candidates {
+            print("\(candidate)")
+        }
+        
+        var oldestTitle:String = ""
+        if let oldest = candidates.min(by: {
+            let date1 = $0["date"] as? Date ?? Date.distantFuture
+            let date2 = $1["date"] as? Date ?? Date.distantFuture
+            return date1 < date2
+        }) {
+            print("Oldest candidate: \(oldest)")
+            oldestTitle = oldest["book"] as? String ?? ""
+            
+            if let candidateSeriesName = oldest["series"] as? String {
+                let candidateSeries = inProgressSeries.filter({$0.name == candidateSeriesName })
+                if candidateSeries.count == 1, let singleNotStartedSeries = candidateSeries.first {
+                    let notStartedBooks = singleNotStartedSeries.books.filter({$0.readStatus == .notStarted})
+                    if let oldestNotStartedBook = notStartedBooks.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
+                        
+                        print("Oldest notStarted Book: '\(oldestNotStartedBook.title)'")
+                        oldestTitle = oldestNotStartedBook.title
+                    }
+                }
+            }
+        }
+        
+        return oldestTitle
     }
-    
     
     var body: some View {
         NavigationStack {
@@ -98,8 +139,6 @@ struct SeriesListView: View {
                 } else {
                     List {
                         Section(header: seriesStatusCountView) {
-                            
-                            
                             ForEach(sortedSeries) { bookSeries in
                                 NavigationLink(value: bookSeries) {
                                     SeriesRowView(series: bookSeries)

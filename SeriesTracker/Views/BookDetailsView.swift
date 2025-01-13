@@ -29,6 +29,7 @@ struct BookDetailsView: View {
                     }
                     Spacer()
                 }
+                Text("Series Order:  \(book.seriesOrder)")
             }
             
             Section(header: Text("Reading Progress")) {
@@ -37,7 +38,7 @@ struct BookDetailsView: View {
                         Text(status.rawValue.capitalized).tag(status)
                     }
                 }
-                .pickerStyle(SegmentedPickerStyle())
+                //.pickerStyle(SegmentedPickerStyle())
                 
                 if book.readStatus != .notStarted {
                     DatePicker("Start Date",
