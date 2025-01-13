@@ -18,6 +18,7 @@ struct BookEditorView: View {
     @State private var newAuthorName = ""
     @State private var isNewBook: Bool = false
     @State private var title: String = ""
+    @State private var seriesOrder: Int = 1
     @State private var selectedAuthor: Author?
     @State private var author: Author = Author(name: "Not Selected")
     
@@ -32,6 +33,7 @@ struct BookEditorView: View {
             editorTitle = "Edit Book"
             buttonName = "Update Book"
             title = existingBook.title
+            seriesOrder = existingBook.seriesOrder
             author = existingBook.author ?? Author(name: "Not Selected")
         } else {
             let newBook = Book(title: "")
@@ -63,6 +65,8 @@ struct BookEditorView: View {
                     .onAppear {
                         selectedAuthor = series.author
                     }
+                    Stepper("Series Order:  \(seriesOrder.formatted())", value: $seriesOrder, in: 1...99)
+
                 }
                 
                 Section(header: Text("Reading Progress")) {
@@ -158,7 +162,7 @@ struct BookEditorView: View {
         case .inProgress:
             book.endDate = nil
             book.rating = nil
-        case .completed, .abandoned:
+        case .completed, .abandoned, .notPurchased:
             if book.startDate == nil {
                 book.startDate = book.endDate
             }
@@ -169,6 +173,7 @@ struct BookEditorView: View {
             book.series = series
             book.author = selectedAuthor
             book.series = series
+            book.seriesOrder = seriesOrder
             series.books.append(book)
             try modelContext.save() // redundant?
             dismiss()

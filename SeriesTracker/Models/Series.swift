@@ -61,6 +61,7 @@ class Series: Codable, Hashable, Identifiable {
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
         try container.encode(books, forKey: .books)
+        try container.encode(self.status, forKey: .status)
         try container.encode(author, forKey: .author)
         try container.encode(notes, forKey: .notes)
     }
@@ -77,12 +78,20 @@ class Series: Codable, Hashable, Identifiable {
 //        return status
 //    }
 
+    func containsNotStartedBooks() -> Bool {
+        books.contains(where: {$0.readStatus == .notStarted})
+    }
+    
     func lastReadBook() -> Date? {
-        if let oldestObject = books.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
-          //  print("The oldest object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
+        let completedBooks = books.filter({$0.readStatus == .completed})
+        for abook in completedBooks {
+            print("'\(abook.title)' was completed on \(abook.endDate ?? Date.distantFuture)")
+        }
+        if let oldestObject = books.filter({$0.readStatus == .completed}).min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
+           print("The oldest completed object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
             return oldestObject.endDate
         } else {
-          //  print("The array is empty")
+          //print("The array is empty")
             return nil
         }
     }
@@ -95,13 +104,22 @@ class Series: Codable, Hashable, Identifiable {
     }
     
     func lastReadBookName() -> String? {
-        if let oldestObject = books.min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
+        if let oldestObject = books.filter({$0.readStatus == .completed}).min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
           //  print("The oldest object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
             return oldestObject.title
         } else {
           //  print("The array is empty")
             return nil
         }
+    }
+    
+    func nextBookToRead() -> String {
+        var candidate = ""
+        if let nextBook = books.filter({$0.readStatus == .notStarted}).first {
+            candidate = nextBook.title
+        }
+        
+        return candidate
     }
     
     static func exportToJSON(series: [Series]) throws -> Data {
