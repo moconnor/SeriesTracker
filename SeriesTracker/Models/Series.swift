@@ -61,6 +61,7 @@ class Series: Codable, Hashable, Identifiable {
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
         try container.encode(books, forKey: .books)
+        try container.encode(self.status, forKey: .status)
         try container.encode(author, forKey: .author)
         try container.encode(notes, forKey: .notes)
     }
