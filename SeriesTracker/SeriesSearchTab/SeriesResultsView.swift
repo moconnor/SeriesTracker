@@ -72,7 +72,8 @@ struct SeriesResultsView: View {
             let encodedAuthor = authorName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             
             //let urlString = "https://www.googleapis.com/books/v1/volumes?q=intitle:\(encodedSeries)+inauthor:\(encodedAuthor)&maxResults=40"
-            let query = "\(seriesName) in title+inauthor:\(authorName)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            //let query = "\(seriesName) in title+inauthor:\(authorName)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            let query = "inauthor:\(authorName)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
 
             let urlString = "https://www.googleapis.com/books/v1/volumes?q=\(query)&maxResults=40"
             
