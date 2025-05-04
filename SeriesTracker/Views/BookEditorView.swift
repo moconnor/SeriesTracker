@@ -76,16 +76,26 @@ struct BookEditorView: View {
                         }
                     }
 
-                    if book.readStatus != .notStarted {
+                    if book.readStatus != .notStarted { // Only show if it's something other than notstartede
                         DatePicker("Start Date", selection: Binding(
-                            get: { book.startDate ?? Date() },
+                            get: {
+                                if book.startDate == nil {
+                                    book.startDate = Date()
+                                }
+                                return book.startDate!
+                            },
                             set: { book.startDate = $0 }
                         ), displayedComponents: .date)
                     }
                     
                     if book.readStatus == .completed || book.readStatus == .abandoned {
                         DatePicker("End Date", selection: Binding(
-                            get: { book.endDate ?? Date() },
+                            get: {
+                                if book.endDate == nil {
+                                    book.endDate = Date()
+                                }
+                                return book.endDate!
+                            },
                             set: { book.endDate = $0 }
                         ), displayedComponents: .date)
                     }

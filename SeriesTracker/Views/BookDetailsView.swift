@@ -43,7 +43,12 @@ struct BookDetailsView: View {
                 if book.readStatus != .notStarted {
                     DatePicker("Start Date",
                                selection: Binding(
-                                get: { book.startDate ?? Date() },
+                                get: {
+                                    if book.startDate == nil {
+                                        book.startDate = Date()
+                                    }
+                                    return book.startDate!
+                                },
                                 set: { book.startDate = $0 }
                                ),
                                displayedComponents: .date)
@@ -52,7 +57,12 @@ struct BookDetailsView: View {
                 if book.readStatus == .completed {
                     DatePicker("Completion Date",
                                selection: Binding(
-                                get: { book.endDate ?? Date() },
+                                get: {
+                                    if book.endDate == nil {
+                                        book.endDate = Date()
+                                    }
+                                    return book.endDate!
+                                },
                                 set: { book.endDate = $0 }
                                ),
                                displayedComponents: .date)
