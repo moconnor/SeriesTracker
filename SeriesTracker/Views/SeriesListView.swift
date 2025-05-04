@@ -274,6 +274,11 @@ struct SeriesListView: View {
                 SeriesEditorView()
             }
         }
+        .onAppear {
+            Task {
+                await checkForNewBooks()
+            }
+        }
     }
     
     private func statusCount(_ status:SeriesStatus) -> Int {
@@ -329,6 +334,106 @@ struct SeriesListView: View {
         }
     }
     
+    // MARK:  Debug... remove put someplace gooder ;)
+    
+    private func getCommonWords(seriesName: String, textSnippet: String) -> [String] {
+        // Split the strings into words (based on whitespace and punctuation)
+        let seriesNameWords = Set(seriesName.lowercased().components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty })
+        let textSnippetWords = Set(textSnippet.lowercased().components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty })
+
+        // Find common words
+        let commonWords = seriesNameWords.intersection(textSnippetWords)
+        return Array(commonWords)
+    }
+    
+    private func isContainedInSnippet(_ candidate: String, _ snippet: String) -> Bool {
+        
+        let candidateWords = Set(candidate.lowercased().components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }).filter { $0.count > 2}
+        let snippetWords = Set(snippet.lowercased().components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty })
+
+        // Find common words
+        let commonWords = candidateWords.intersection(snippetWords)
+
+        return commonWords.count >= candidateWords.count
+    }
+    
+    func removeDiacritics(_ string: String) -> String {
+        // Normalize the string to NFD (decomposed form) and remove diacritics
+        string.folding(options: .diacriticInsensitive, locale: .current)
+    }
+    
+    private func searchForNewBooks(inSeries:Series) async -> [Book] {
+       print("Checking '\(inSeries.name)'")
+        do {
+            let seriesName = inSeries.name
+            let authorName = removeDiacritics(inSeries.author.name.lowercased()) //inSeries.author.name
+//            let encodedSeries = seriesName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+//            let encodedAuthor = authorName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            
+            //let urlString = "https://www.googleapis.com/books/v1/volumes?q=intitle:\(encodedSeries)+inauthor:\(encodedAuthor)&maxResults=40"
+            //let query = "\(seriesName) in title+inauthor:\(authorName)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            let query = "title+inauthor:\(authorName)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+
+            let urlString = "https://www.googleapis.com/books/v1/volumes?q=\(query)&maxResults=40"
+            
+            guard let url = URL(string: urlString) else {
+                throw URLError(.badURL)
+            }
+            
+            let (data, response) = try await URLSession.shared.data(from: url)
+            
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
+                throw URLError(.badServerResponse)
+            }
+            
+//            let jsonstring = String(data: data, encoding: .utf8) ?? ""
+            //print(jsonstring)
+            let result = try JSONDecoder().decode(GoogleBooksResponse.self, from: data)
+            //books = result.items.map { $0.volumeInfo }
+            
+            /// Tweaking this filter... I was getting false positives because the search criteria words were showing up in every entry's info and previewLinks, even if they didn't show up anywhere else
+            /// based on a sample of one Series, I changed to series matching to title, description or searchInfo.
+            
+            let filteredBooks = result.items.filter { item in
+                let book = item.volumeInfo
+                let searchInfo = item.searchInfo
+                let matchesTitleSeries = book.title.localizedCaseInsensitiveContains(seriesName)
+                //let matchesDescription = book.description?.localizedCaseInsensitiveContains(seriesName) ?? false
+                let matchesDescription = isContainedInSnippet(seriesName, book.description ?? "")
+                //let matchesSearchInfo = searchInfo?.textSnippet?.localizedCaseInsensitiveContains(seriesName) ?? false
+                let matchesSearchInfo = isContainedInSnippet(seriesName, searchInfo?.textSnippet?.description ?? "")
+               //let matchesAuthor = book.authors?.contains { $0.localizedCaseInsensitiveContains(authorName) } ?? false
+                
+                let matchesAuthor = book.authors?.contains {removeDiacritics($0.lowercased()).contains(authorName) } ?? false
+                return (matchesTitleSeries || matchesDescription || matchesSearchInfo ) && matchesAuthor
+            }.map { $0.volumeInfo }
+            
+            if filteredBooks.count > 0 {
+                print("Looking for new books in '\(seriesName)'... found (\(filteredBooks.count)) candidates")
+                for filteredBook in filteredBooks {
+                    if inSeries.contains(bookName: filteredBook.title) == false {
+                        print("  New book Candidate: \(filteredBook.title)")
+                    }
+                }
+            } else {
+                print("Didn't find anything for '\(seriesName)'...")
+            }
+        } catch {
+            print("Something went wrong! error='\(error)'")
+        }
+        
+        return []
+    }
+    
+    private func checkForNewBooks() async {
+        let waitingForNextBookSeries = series.filter({$0.status == .waitingForNextBook })
+        print("\n\n\nChecking for new books... in (\(waitingForNextBookSeries.count)) waiting series")
+        for series in waitingForNextBookSeries {
+            await searchForNewBooks(inSeries: series)
+        }
+
+    }
 }
 
 #Preview("Empty") {

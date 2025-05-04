@@ -9,11 +9,20 @@ import Foundation
 import SwiftUI
 
 struct GoogleBooksResponse: Codable {
-    let items: [VolumeInfo]
+    let items: [ItemInfo]
 }
 
-struct VolumeInfo: Codable {
+struct ItemInfo:  Codable {
+    let searchInfo: SearchInfo?
     let volumeInfo: BookInfo
+}
+
+//struct VolumeInfo: Codable {
+//    let volumeInfo: BookInfo
+//}
+
+struct SearchInfo: Codable {
+    let textSnippet: String?
 }
 
 struct BookInfo: Codable {

@@ -84,16 +84,20 @@ class Series: Codable, Hashable, Identifiable {
     
     func lastReadBook() -> Date? {
         let completedBooks = books.filter({$0.readStatus == .completed})
-        for abook in completedBooks {
-            print("'\(abook.title)' was completed on \(abook.endDate ?? Date.distantFuture)")
-        }
+//        for abook in completedBooks {
+//            print("'\(abook.title)' was completed on \(abook.endDate ?? Date.distantFuture)")
+//        }
         if let oldestObject = books.filter({$0.readStatus == .completed}).min(by: { $0.endDate ?? Date() > $1.endDate ?? Date() }) {
-           print("The oldest completed object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
+           //print("The oldest completed object is \(oldestObject.title) with date \(oldestObject.endDate ?? Date.distantFuture)")
             return oldestObject.endDate
         } else {
           //print("The array is empty")
             return nil
         }
+    }
+    
+    func contains(bookName:String) -> Bool {
+       return books.contains(where: {$0.title == bookName})
     }
     
     func shouldHide() -> Bool {
