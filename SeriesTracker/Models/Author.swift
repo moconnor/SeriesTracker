@@ -12,6 +12,7 @@ import SwiftData
 class Author: Codable, Hashable {
     var id: UUID
     var name: String
+    //@Attribute(.unique) var name: String   // ← make each name unique in the SQLite schema
     
     init(name: String) {
         self.id = UUID()

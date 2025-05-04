@@ -366,7 +366,10 @@ struct SeriesListView: View {
        print("Checking '\(inSeries.name)'")
         do {
             let seriesName = inSeries.name
-            let authorName = removeDiacritics(inSeries.author.name.lowercased()) //inSeries.author.name
+            var authorName = ""
+            let author = inSeries.author
+            authorName = removeDiacritics(author.name.lowercased()) //inSeries.author.name
+            
 //            let encodedSeries = seriesName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
 //            let encodedAuthor = authorName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             
@@ -430,7 +433,7 @@ struct SeriesListView: View {
         let waitingForNextBookSeries = series.filter({$0.status == .waitingForNextBook })
         print("\n\n\nChecking for new books... in (\(waitingForNextBookSeries.count)) waiting series")
         for series in waitingForNextBookSeries {
-            await searchForNewBooks(inSeries: series)
+            let _ = await searchForNewBooks(inSeries: series)
         }
 
     }

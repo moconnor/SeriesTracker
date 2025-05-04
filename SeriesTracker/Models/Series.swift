@@ -52,7 +52,7 @@ class Series: Codable, Hashable, Identifiable {
         name = try container.decodeIfPresent(String.self, forKey: .name) ?? "Untitled"
         books = try container.decodeIfPresent([Book].self, forKey: .books) ?? []
         status = try container.decodeIfPresent(SeriesStatus.self, forKey: .status) ?? .inProgress
-        author = try container.decodeIfPresent(Author.self, forKey: .author) ?? Author(name: "Unknown")
+        author = try container.decodeIfPresent(Author.self, forKey: .author)  ?? Author(name: "Couldn't Decode Series Author, FIX!")
         notes = try container.decodeIfPresent(String.self, forKey: .notes) ?? "" // Default: empty string
     }
     
@@ -83,7 +83,7 @@ class Series: Codable, Hashable, Identifiable {
     }
     
     func lastReadBook() -> Date? {
-        let completedBooks = books.filter({$0.readStatus == .completed})
+//        let completedBooks = books.filter({$0.readStatus == .completed})
 //        for abook in completedBooks {
 //            print("'\(abook.title)' was completed on \(abook.endDate ?? Date.distantFuture)")
 //        }
