@@ -127,10 +127,35 @@ class Series: Codable, Hashable, Identifiable {
     }
     
     static func exportToJSON(series: [Series]) throws -> Data {
+        
+        // Convert to DTO
+        let dtos = series.map { s in
+          SeriesDTO(
+            name: s.name,
+            status: s.status,
+            authorname: s.author.name,
+            notes: s.notes,
+            books: s.books.map { b in
+              BookDTO(
+                title: b.title,
+                seriesOrder: b.seriesOrder,
+                readStatus: b.readStatus,
+                startDate: b.startDate,
+                endDate: b.endDate,
+                rating: b.rating,
+                notes: b.notes,
+                authorname: b.author?.name ?? "No Author")
+            }
+          )
+        }
+        
+        
+        
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         encoder.outputFormatting = .prettyPrinted
-        return try encoder.encode(series)
+        //return try encoder.encode(series)
+        return try encoder.encode(dtos)
     }
     
     static func seriesJSON(series: [Series]) -> Data {
@@ -163,3 +188,12 @@ struct JSONFile: FileDocument {
 
 }
 
+struct SeriesDTO: Codable {
+    var name: String
+//    @Relationship(deleteRule: .cascade) var books: [Book]
+    var status: SeriesStatus
+//    var author: Author
+    var authorname: String
+    var notes: String
+    var books: [BookDTO]
+}

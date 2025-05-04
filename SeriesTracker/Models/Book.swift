@@ -67,3 +67,18 @@ class Book: Identifiable, Codable, Hashable {
         try container.encodeIfPresent(author, forKey: .author)
     }
 }
+
+struct BookDTO : Codable {
+    var title: String
+    var seriesOrder: Int
+    var readStatus: ReadStatus
+    var startDate: Date?
+    var endDate: Date?
+    var rating: Int?
+    var notes: String
+    var authorname: String
+//    var series: Series?
+//    var author: Author?
+//    @Attribute(.externalStorage) var bookCover: Data?
+
+}

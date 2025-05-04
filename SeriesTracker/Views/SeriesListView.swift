@@ -207,7 +207,8 @@ struct SeriesListView: View {
                                     let data = try Data(contentsOf: url)
                                     let decoder = JSONDecoder()
                                     decoder.dateDecodingStrategy = .iso8601
-                                    let newSeries = try decoder.decode([Series].self, from: data)
+                                    //let newSeries = try decoder.decode([Series].self, from: data)
+                                    let newDTOSeries = try decoder.decode([SeriesDTO].self, from: data)
                                     url.stopAccessingSecurityScopedResource()
                                     
                                     // this appears to clear the database without errors
@@ -215,10 +216,34 @@ struct SeriesListView: View {
                                     try modelContext.delete(model: Book.self)
                                     try modelContext.delete(model: Author.self)
                                     
-                                    // this inserts an author record the series and the books
-                                    for series in newSeries {
+                                    for dto in newDTOSeries {
+                                        let author = modelContext.author(named: dto.authorname)
+                                        let series = Series(name: dto.name, author: author)
+                                        series.notes = dto.notes
+                                        series.status = dto.status
                                         modelContext.insert(series)
+                                        for bookDTO in dto.books {
+                                            let bookAuthor = modelContext.author(named: bookDTO.authorname)
+                                            let book = Book(title: bookDTO.title,
+                                                            seriesOrder: bookDTO.seriesOrder,
+                                                            author: bookAuthor,
+                                                            readStatus: bookDTO.readStatus)
+                                            book.series = series
+                                            book.startDate = bookDTO.startDate
+                                            book.endDate = bookDTO.endDate
+                                            book.notes = bookDTO.notes
+                                            book.rating = bookDTO.rating
+                                            modelContext.insert(book)
+                                            series.books.append(book)
+                                        }
                                     }
+                                    
+                                    
+                                    
+                                    // this inserts an author record the series and the books
+//                                    for series in newSeries {
+//                                        modelContext.insert(series)
+//                                    }
                                     try modelContext.save()
                                 }
                                 

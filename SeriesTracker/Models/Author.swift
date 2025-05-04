@@ -35,3 +35,7 @@ class Author: Codable, Hashable {
         try container.encode(name, forKey: .name)
     }
 }
+
+struct AuthorDTO : Codable {
+    let name: String
+}
