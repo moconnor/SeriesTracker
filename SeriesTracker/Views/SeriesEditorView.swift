@@ -98,6 +98,16 @@ struct SeriesEditorView: View {
     
     private var authorSelectionView: some View {
         Menu {
+            
+            // Add new author option
+            Button(action: {
+                showingNewAuthorSheet = true
+            }) {
+                Label("Add New Author", systemImage: "plus.circle")
+            }
+            
+            Divider()
+
             // Existing authors
             ForEach(authors) { author in
                 Button(action: {
@@ -110,15 +120,6 @@ struct SeriesEditorView: View {
                         }
                     }
                 }
-            }
-            
-            Divider()
-            
-            // Add new author option
-            Button(action: {
-                showingNewAuthorSheet = true
-            }) {
-                Label("Add New Author", systemImage: "plus.circle")
             }
         } label: {
             HStack {

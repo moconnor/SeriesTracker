@@ -192,6 +192,8 @@ struct SeriesListView: View {
                         Button("Import Series") {
                             isImporting = true
                         }
+                        
+                        Button("Version: \(Bundle.main.versionNumberString)") {}
                     } label: {
                         Image(systemName: "ellipsis.circle")
                             .imageScale(.large)
@@ -301,7 +303,7 @@ struct SeriesListView: View {
         }
         .onAppear {
             Task {
-                await checkForNewBooks()
+                // await checkForNewBooks() // TODO:  Uncomment to test async online check for new books... 
             }
         }
     }

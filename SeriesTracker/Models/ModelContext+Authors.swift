@@ -24,3 +24,18 @@ extension ModelContext {
         }
     }
 }
+
+extension Bundle {
+    /// CFBundleShortVersionString
+    var appVersion: String {
+        infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+    }
+    /// CFBundleVersion
+    var buildNumber: String {
+        infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+    }
+    /// e.g. "1.2.3 (45)"
+    var versionNumberString: String {
+        "\(appVersion)"
+    }
+}
