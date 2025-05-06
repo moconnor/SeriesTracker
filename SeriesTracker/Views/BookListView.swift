@@ -72,7 +72,7 @@ struct BookListView: View {
             }
         }
         .sheet(isPresented: $addingNewBook) {
-            BookEditorView(book: nil, series: series)
+            BookEditorView(series: series)
         }
     }
     

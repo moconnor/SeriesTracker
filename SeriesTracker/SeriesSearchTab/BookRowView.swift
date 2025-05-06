@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct BookRowView: View {
+    @Environment(\.modelContext) private var modelContext
     let bookInfo: BookInfo
     @State private var importBook: Bool = false
     
@@ -53,8 +54,9 @@ struct BookRowView: View {
         }
         .padding(.vertical, 8)
         .sheet(isPresented: $importBook) {
-            let authorName = bookInfo.authors?.first ?? "Unknown"
-            let newBook = Book(title: bookInfo.title, author: Author(name: authorName))
+            let authorName = bookInfo.authors?.first ?? "Unknown" // TODO:  How to handle multiple authors...
+            let auth = modelContext.author(named: authorName)
+            let newBook = Book(title: bookInfo.title, author: auth)
             ImportBookView(book: newBook)
         }
     }

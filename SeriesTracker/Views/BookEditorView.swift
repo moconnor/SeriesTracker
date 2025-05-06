@@ -20,7 +20,7 @@ struct BookEditorView: View {
     @State private var title: String = ""
     @State private var seriesOrder: Int = 1
     @State private var selectedAuthor: Author?
-    @State private var author: Author = Author(name: "Not Selected")
+    @State private var author: Author?
     
     @Query(sort: \Author.name) private var authors: [Author]
     
@@ -34,7 +34,7 @@ struct BookEditorView: View {
             buttonName = "Update Book"
             title = existingBook.title
             seriesOrder = existingBook.seriesOrder
-            author = existingBook.author ?? Author(name: "Not Selected")
+            author = existingBook.author
         } else {
             let newBook = Book(title: "")
             _book = State(initialValue: newBook)
@@ -153,8 +153,9 @@ struct BookEditorView: View {
     }
     
     private func addNewAuthor() {
-        let newAuthor = Author(name: newAuthorName)
-        modelContext.insert(newAuthor)
+        let newAuthor = modelContext.author(named: newAuthorName)
+        
+        //modelContext.insert(newAuthor)
         book.author = newAuthor
         newAuthorName = ""
         showingNewAuthorSheet = false

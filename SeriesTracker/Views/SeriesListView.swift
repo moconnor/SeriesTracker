@@ -192,6 +192,8 @@ struct SeriesListView: View {
                         Button("Import Series") {
                             isImporting = true
                         }
+                        
+                        Button("Version: \(Bundle.main.versionNumberString)") {}
                     } label: {
                         Image(systemName: "ellipsis.circle")
                             .imageScale(.large)
@@ -207,7 +209,8 @@ struct SeriesListView: View {
                                     let data = try Data(contentsOf: url)
                                     let decoder = JSONDecoder()
                                     decoder.dateDecodingStrategy = .iso8601
-                                    let newSeries = try decoder.decode([Series].self, from: data)
+                                    //let newSeries = try decoder.decode([Series].self, from: data)
+                                    let newDTOSeries = try decoder.decode([SeriesDTO].self, from: data)
                                     url.stopAccessingSecurityScopedResource()
                                     
                                     // this appears to clear the database without errors
@@ -215,10 +218,34 @@ struct SeriesListView: View {
                                     try modelContext.delete(model: Book.self)
                                     try modelContext.delete(model: Author.self)
                                     
-                                    // this inserts an author record the series and the books
-                                    for series in newSeries {
+                                    for dto in newDTOSeries {
+                                        let author = modelContext.author(named: dto.authorname)
+                                        let series = Series(name: dto.name, author: author)
+                                        series.notes = dto.notes
+                                        series.status = dto.status
                                         modelContext.insert(series)
+                                        for bookDTO in dto.books {
+                                            let bookAuthor = modelContext.author(named: bookDTO.authorname)
+                                            let book = Book(title: bookDTO.title,
+                                                            seriesOrder: bookDTO.seriesOrder,
+                                                            author: bookAuthor,
+                                                            readStatus: bookDTO.readStatus)
+                                            book.series = series
+                                            book.startDate = bookDTO.startDate
+                                            book.endDate = bookDTO.endDate
+                                            book.notes = bookDTO.notes
+                                            book.rating = bookDTO.rating
+                                            modelContext.insert(book)
+                                            series.books.append(book)
+                                        }
                                     }
+                                    
+                                    
+                                    
+                                    // this inserts an author record the series and the books
+//                                    for series in newSeries {
+//                                        modelContext.insert(series)
+//                                    }
                                     try modelContext.save()
                                 }
                                 
@@ -276,7 +303,7 @@ struct SeriesListView: View {
         }
         .onAppear {
             Task {
-                await checkForNewBooks()
+                // await checkForNewBooks() // TODO:  Uncomment to test async online check for new books... 
             }
         }
     }
@@ -366,7 +393,10 @@ struct SeriesListView: View {
        print("Checking '\(inSeries.name)'")
         do {
             let seriesName = inSeries.name
-            let authorName = removeDiacritics(inSeries.author.name.lowercased()) //inSeries.author.name
+            var authorName = ""
+            let author = inSeries.author
+            authorName = removeDiacritics(author.name.lowercased()) //inSeries.author.name
+            
 //            let encodedSeries = seriesName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
 //            let encodedAuthor = authorName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             
@@ -430,7 +460,7 @@ struct SeriesListView: View {
         let waitingForNextBookSeries = series.filter({$0.status == .waitingForNextBook })
         print("\n\n\nChecking for new books... in (\(waitingForNextBookSeries.count)) waiting series")
         for series in waitingForNextBookSeries {
-            await searchForNewBooks(inSeries: series)
+            let _ = await searchForNewBooks(inSeries: series)
         }
 
     }

@@ -24,8 +24,7 @@ struct SeriesEditorView: View {
             isNewSeries = false
         } else {
             // Create a new series with a default author when none is provided
-            let defaultAuthor = Author(name: "")
-            let newSeries = Series(name: "", author: defaultAuthor)
+            let newSeries = Series(name: "", author: Author(name: "Series Author Not Set"))
             _series = State(initialValue: newSeries)
             editorTitle = "Add Series"
             buttonName = "Add Series"
@@ -99,6 +98,16 @@ struct SeriesEditorView: View {
     
     private var authorSelectionView: some View {
         Menu {
+            
+            // Add new author option
+            Button(action: {
+                showingNewAuthorSheet = true
+            }) {
+                Label("Add New Author", systemImage: "plus.circle")
+            }
+            
+            Divider()
+
             // Existing authors
             ForEach(authors) { author in
                 Button(action: {
@@ -112,15 +121,6 @@ struct SeriesEditorView: View {
                     }
                 }
             }
-            
-            Divider()
-            
-            // Add new author option
-            Button(action: {
-                showingNewAuthorSheet = true
-            }) {
-                Label("Add New Author", systemImage: "plus.circle")
-            }
         } label: {
             HStack {
                 Text("Author")
@@ -132,8 +132,9 @@ struct SeriesEditorView: View {
     }
     
     private func addNewAuthor() {
-        let newAuthor = Author(name: newAuthorName)
-        modelContext.insert(newAuthor)
+        let newAuthor = modelContext.author(named: newAuthorName)
+        //let newAuthor = Author(name: newAuthorName)
+        //modelContext.insert(newAuthor)
         series.author = newAuthor
         
         // Reset and dismiss
